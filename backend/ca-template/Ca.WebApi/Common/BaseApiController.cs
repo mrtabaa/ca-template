@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ca.WebApi.Controllers.Helpers;
+namespace Ca.WebApi.Common;
 
 [Route("api/[controller]")]
 [ApiController]

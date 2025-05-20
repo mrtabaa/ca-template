@@ -2,12 +2,11 @@ using Ca.Application.Modules.Auth;
 using Ca.Application.Modules.Auth.Commands;
 using Ca.Contracts.Requests.Auth;
 using Ca.Contracts.Responses.Auth;
-using Ca.Domain.Modules.Auth.Results;
 using Ca.Shared.Results;
-using Ca.WebApi.Mappers;
+using Ca.WebApi.Common;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ca.WebApi.Controllers
+namespace Ca.WebApi.Modules.Auth
 {
     public class AuthController(IAuthService authService) : BaseApiController
     {

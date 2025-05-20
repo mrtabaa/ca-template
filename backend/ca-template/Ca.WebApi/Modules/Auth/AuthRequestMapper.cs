@@ -1,7 +1,7 @@
 using Ca.Application.Modules.Auth.Commands;
 using Ca.Contracts.Requests.Auth;
 
-namespace Ca.WebApi.Mappers;
+namespace Ca.WebApi.Modules.Auth;
 
 public static class AuthRequestMapper
 {
