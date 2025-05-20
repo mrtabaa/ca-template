@@ -1,15 +1,13 @@
-<!--Why here?-->
-<!--        It applies the setting globally to all projects.-->
-<!--        Keeps your .csproj files clean and consistent.-->
-<!--        Ensures no project accidentally opts out or forgets it.-->
-
 <Project>
+    
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+
+    <!-- These items are applied to all projects-->
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="all" />
     </ItemGroup>
