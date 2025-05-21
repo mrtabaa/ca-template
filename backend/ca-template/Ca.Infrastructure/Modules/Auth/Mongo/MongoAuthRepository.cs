@@ -3,8 +3,8 @@ using Ca.Domain.Modules.Auth.Entities;
 using Ca.Domain.Modules.Auth.Enums;
 using Ca.Domain.Modules.Auth.Results;
 using Ca.Infrastructure.Modules.Auth.Mongo.Models;
-using Ca.Infrastructure.MongoCommon;
-using Ca.Infrastructure.MongoCommon.Settings;
+using Ca.Infrastructure.Modules.Common.Mongo;
+using Ca.Infrastructure.Persistence.Mongo.Settings;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 

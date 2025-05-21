@@ -1,4 +1,4 @@
-namespace Ca.Infrastructure.MongoCommon.Settings;
+namespace Ca.Infrastructure.Persistence.Mongo.Settings;
 
 public class MyMongoDbSettings : IMyMongoDbSettings
 {

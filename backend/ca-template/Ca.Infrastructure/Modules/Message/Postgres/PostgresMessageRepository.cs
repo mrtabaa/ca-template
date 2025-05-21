@@ -2,7 +2,7 @@ using Ca.Domain.Modules.Auth;
 using Ca.Domain.Modules.Auth.Entities;
 using Ca.Domain.Modules.Auth.Results;
 
-namespace Ca.Infrastructure.Modules.Message.PostgreSql;
+namespace Ca.Infrastructure.Modules.Message.Postgres;
 
 public class PostgresMessageRepository : IAuthRepository
 {

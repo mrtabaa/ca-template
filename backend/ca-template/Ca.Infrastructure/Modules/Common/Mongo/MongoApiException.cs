@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Ca.Infrastructure.MongoCommon.Models;
+namespace Ca.Infrastructure.Modules.Common.Mongo;
 
 public class MongoApiException
 {

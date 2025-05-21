@@ -1,19 +1,20 @@
-using Ca.Domain.Modules.Auth;
-using Ca.Infrastructure.Modules.Auth.Mongo;
-using Ca.Infrastructure.MongoCommon;
+using Ca.Infrastructure.Persistence.Mongo;
+using Ca.Infrastructure.Persistence.Postgres.DependencyInjections;
+using Ca.Infrastructure.Persistence.Postgres;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ca.Infrastructure;
 
-public static class DependencyInjection
+public static class InfrastructureServices
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration config)
     {
         services.AddMongoService(config);
+        services.AddPostgresService(config);
         
-        services.AddScoped<IAuthRepository, MongoAuthRepository>();
-        // services.AddScoped<IAuthRepository, PostgresPaymentRepository>();
+        services.AddMongoRepositories();
+        services.AddPostgresRepositories();
         
         return services;
     }

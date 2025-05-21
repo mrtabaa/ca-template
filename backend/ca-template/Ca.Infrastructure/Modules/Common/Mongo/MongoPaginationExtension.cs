@@ -2,9 +2,9 @@ using Ca.Shared.Pagination;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
-namespace Ca.Infrastructure.Mongo.Extensions;
+namespace Ca.Infrastructure.Modules.Common.Mongo;
 
-public static class MongoPaginationExtensions
+public static class MongoPaginationExtension
 {
     /// <summary>
     ///     call MongoDB collection and get a limited number of items based on the pageSize and pageNumber.

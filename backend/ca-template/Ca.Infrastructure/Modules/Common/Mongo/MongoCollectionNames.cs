@@ -1,4 +1,4 @@
-namespace Ca.Infrastructure.MongoCommon;
+namespace Ca.Infrastructure.Modules.Common.Mongo;
 
 public class MongoCollectionNames
 {

@@ -1,12 +1,12 @@
-using Ca.Infrastructure.MongoCommon.Settings;
+using Ca.Infrastructure.Persistence.Mongo.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace Ca.Infrastructure.MongoCommon;
+namespace Ca.Infrastructure.Persistence.Mongo;
 
-public static class MongoDependencyInjection
+public static class MongoServiceExtensions
 {
     public static IServiceCollection AddMongoService(this IServiceCollection services, IConfiguration config)
     {
