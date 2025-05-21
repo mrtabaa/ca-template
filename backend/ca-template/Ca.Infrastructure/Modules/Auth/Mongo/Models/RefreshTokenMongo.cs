@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Ca.Infrastructure.Modules.Auth.Mongo.Models;
 
-public class MongoRefreshToken
+public class RefreshTokenMongo
 {
     [property: BsonId]
     [property: BsonRepresentation(BsonType.ObjectId)]

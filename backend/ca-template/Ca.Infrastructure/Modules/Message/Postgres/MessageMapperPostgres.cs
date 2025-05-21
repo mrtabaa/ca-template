@@ -1,6 +1,6 @@
 namespace Ca.Infrastructure.Modules.Message.Postgres;
 
-public static class PostgresMessageMapper
+public static class MessageMapperPostgres
 {
     
 }

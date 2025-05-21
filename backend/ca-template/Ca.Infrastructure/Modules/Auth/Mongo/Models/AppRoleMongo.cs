@@ -5,6 +5,6 @@ using MongoDbGenericRepository.Attributes;
 namespace Ca.Infrastructure.Modules.Auth.Mongo.Models;
 
 [CollectionName("roles")]
-public class MongoAppRole : MongoIdentityRole<ObjectId>
+public class AppRoleMongo : MongoIdentityRole<ObjectId>
 {
 }

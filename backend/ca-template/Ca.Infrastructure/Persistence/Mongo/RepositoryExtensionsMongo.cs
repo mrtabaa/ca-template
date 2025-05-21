@@ -4,11 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Ca.Infrastructure.Persistence.Mongo;
 
-public static class MongoRepositoryExtensions
+public static class RepositoryExtensionsMongo
 {
     public static IServiceCollection AddMongoRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IAuthRepository, MongoAuthRepository>();
+        services.AddScoped<IAuthRepository, AuthRepositoryMongo>();
         
         return services;
     }

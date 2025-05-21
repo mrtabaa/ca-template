@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Ca.Infrastructure.Modules.Common.Mongo;
 
-public class MongoApiException
+public class ApiExceptionMongo
 {
     [property: BsonId]
     [property: BsonRepresentation(BsonType.ObjectId)]

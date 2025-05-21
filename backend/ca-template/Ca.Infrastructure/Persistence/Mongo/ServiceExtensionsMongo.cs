@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace Ca.Infrastructure.Persistence.Mongo;
 
-public static class MongoServiceExtensions
+public static class ServiceExtensionsMongo
 {
     public static IServiceCollection AddMongoService(this IServiceCollection services, IConfiguration config)
     {

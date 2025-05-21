@@ -1,6 +1,6 @@
 namespace Ca.Infrastructure.Modules.Common.Mongo;
 
-public class MongoCollectionNames
+public class CollectionNamesMongo
 {
     public const string Users = "users";
     public const string RefreshTokens = "refresh-tokens";

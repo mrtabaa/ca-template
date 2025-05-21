@@ -4,7 +4,7 @@ using MongoDB.Driver.Linq;
 
 namespace Ca.Infrastructure.Modules.Common.Mongo;
 
-public static class MongoPaginationExtension
+public static class PaginationExtensionMongo
 {
     /// <summary>
     ///     call MongoDB collection and get a limited number of items based on the pageSize and pageNumber.
