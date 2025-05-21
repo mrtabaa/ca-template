@@ -11,11 +11,4 @@
       <ProjectReference Include="..\Ca.Shared\Ca.Shared.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Filters\" />
-      <Folder Include="Middlewares\" />
-      <Folder Include="Modules\Message\" />
-      <Folder Include="Modules\Payments\" />
-    </ItemGroup>
-
 </Project>

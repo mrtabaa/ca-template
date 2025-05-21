@@ -12,11 +12,4 @@
       <PackageReference Include="MongoDB.Driver" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Features\" />
-      <Folder Include="Modules\Message\Mongo\Models\" />
-      <Folder Include="Modules\Payment\Mongo\Models\" />
-      <Folder Include="PostgreSql\Repositories\" />
-    </ItemGroup>
-
 </Project>

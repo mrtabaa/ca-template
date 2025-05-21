@@ -11,12 +11,4 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="E2E\WebApi\" />
-      <Folder Include="Integration\Application\" />
-      <Folder Include="Integration\Infrastructure\" />
-      <Folder Include="Unit\Application\" />
-      <Folder Include="Unit\Domain\" />
-    </ItemGroup>
-
 </Project>
