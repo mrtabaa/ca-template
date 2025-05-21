@@ -54,7 +54,7 @@ public class AuthRepositoryMongo : IAuthRepository
         }
 
         IdentityResult roleResult = await _userManager.AddToRoleAsync(
-            appUserMongo, AppRolesProvider.GetRoleStrValue(Roles.Member)
+            appUserMongo, AppRolesProviderMongo.GetRoleStrValue(Roles.Member)
         );
         if (!roleResult.Succeeded) // Failed to add the role. Delete appUser from DB
         {

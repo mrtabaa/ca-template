@@ -13,7 +13,7 @@ public class AuthService(IAuthRepository authRepository) : IAuthService
         RegisterCommand command, CancellationToken ct
     )
     {
-        AppUser appUser = AuthMapper.MapRegisterCommandToAppUser(command);
+        var appUser = AppUser.Create(command.Name, command.Email, command.Password);
 
         AuthCreationResponse response = await authRepository.CreateAsync(appUser, ct);
 
