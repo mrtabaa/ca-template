@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <ItemGroup>
-      <Folder Include="Modules\" />
-    </ItemGroup>
-
+  <ItemGroup>
+    <Folder Include="Modules\Auth\Aggregates\" />
+    <Folder Include="Modules\Message\Aggregates\" />
+    <Folder Include="Modules\Payment\Aggregates\" />
+  </ItemGroup>
 </Project>
