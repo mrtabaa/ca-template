@@ -1,7 +1,7 @@
 using Ca.Application.Modules.Auth.Commands;
 using Ca.Contracts.Responses.Auth;
 using Ca.Domain.Modules.Auth;
-using Ca.Domain.Modules.Auth.Entities;
+using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.Auth.Results;
 using Ca.Shared.Results;
 

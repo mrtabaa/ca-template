@@ -1,4 +1,4 @@
-namespace Ca.Domain.Modules.Auth.Enums;
+namespace Ca.Domain.Modules.Shared.Enums;
 
 public enum Roles
 {

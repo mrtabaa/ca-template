@@ -1,4 +1,4 @@
-using Ca.Domain.Modules.Auth.Entities;
+using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.Auth.Results;
 
 namespace Ca.Domain.Modules.Auth;

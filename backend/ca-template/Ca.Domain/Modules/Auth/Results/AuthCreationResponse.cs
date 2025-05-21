@@ -1,5 +1,5 @@
 using System.Runtime.InteropServices;
-using Ca.Domain.Modules.Auth.Entities;
+using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.Auth.Enums;
 
 namespace Ca.Domain.Modules.Auth.Results;
