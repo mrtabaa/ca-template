@@ -1,10 +1,8 @@
-using Ca.Domain.Modules.Auth.Enums;
 using Ca.Domain.Modules.Shared.Enums;
-using Ca.Infrastructure.Modules.Auth.Mongo.Models;
 
-namespace Ca.Infrastructure.Modules.Auth;
+namespace Ca.Infrastructure.Modules.Auth.Mongo.Models;
 
-public static class AppRolesProvider
+public static class AppRolesProviderMongo
 {
     public static readonly AppRoleMongo[] AppRoles =
     [
