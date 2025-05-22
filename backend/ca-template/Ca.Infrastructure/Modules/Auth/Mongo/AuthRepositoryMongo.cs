@@ -17,7 +17,7 @@ public class AuthRepositoryMongo : IAuthRepository
 
     public async Task<AuthCreationResponse> CreateAsync(AppUser appUser, CancellationToken cancellationToken)
     {
-        AppUserMongo? existingUser = await _userManager.FindByEmailAsync(appUser.Email);
+        AppUserMongo? existingUser = await _userManager.FindByEmailAsync(appUser.Email.Value);
         if (existingUser != null)
         {
             return new AuthCreationResponse(

@@ -1,3 +1,4 @@
+using Ca.Domain.Modules.Auth.ValueObjects;
 using Ca.Domain.Modules.Shared.Exceptions;
 
 namespace Ca.Domain.Modules.Auth.Aggregates;
@@ -12,24 +13,30 @@ public class AppUser
     public AppUser(string name, string email, bool isAlive)
     {
         Name = name;
-        Email = email;
+        Email = Email.Create(email); // Use of ValueObject
         IsAlive = isAlive;
     }
 
     public string Name { get; private set; } = string.Empty;
-    public string Email { get; private set; } = string.Empty;
+    public Email Email { get; private set; }
     public string Password { get; private set; } = string.Empty;
     public bool IsAlive { get; private set; } = true;
 
-    public static AppUser Create(string name, string email, string password)
+    public static AppUser Create(string name, string emailRaw, string password)
     {
-        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-            throw new DomainException("Name, Email and Password cannot be null or empty");
+        if (string.IsNullOrWhiteSpace(name))
+            throw new DomainException(nameof(name), "Name cannot be empty");
+
+        var email = Email.Create(emailRaw); // ✅ value object handles validation
+
+        if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
+            throw new DomainException(nameof(password), "Password must be at least 8 characters");
+
 
         return new AppUser
         {
             Name = name,
-            Email = email,
+            Email = email, // Use of ValueObject
             Password = password,
             IsAlive = true
         };

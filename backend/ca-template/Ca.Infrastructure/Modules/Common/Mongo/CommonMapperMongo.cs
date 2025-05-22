@@ -9,7 +9,7 @@ public static class CommonMapperMongo
         new()
         {
             Name = appUser.Name,
-            Email = appUser.Email,
+            Email = appUser.Email.Value,
             IsAlive = appUser.IsAlive
         };
 

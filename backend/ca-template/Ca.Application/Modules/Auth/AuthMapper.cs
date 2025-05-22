@@ -13,7 +13,7 @@ public static class AuthMapper
                 true,
                 new RegisterResponse(
                     authResponse.AppUser.Name,
-                    authResponse.AppUser.Email,
+                    authResponse.AppUser.Email.Value,
                     authResponse.AppUser.IsAlive
                 ),
                 null
