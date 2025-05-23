@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ca.Contracts", "Ca.Contract
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ca.WebApi", "Ca.WebApi\Ca.WebApi.csproj", "{41FA4BF6-C224-46C6-A931-2D734B172E3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{342EFB6C-FBBD-48B8-939B-AEBBECC2EC42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ca.Tests", "Ca.Tests\Ca.Tests.csproj", "{342EFB6C-FBBD-48B8-939B-AEBBECC2EC42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
