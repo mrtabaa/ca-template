@@ -6,7 +6,7 @@ using Ca.Infrastructure.Modules.Message.Postgres;
 using Ca.Infrastructure.Modules.User.Postgres;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Ca.Infrastructure.Persistence.Postgres.DependencyInjections;
+namespace Ca.Infrastructure.Persistence.Postgres;
 
 public static class RepositoryExtensionsPostgres
 {
@@ -15,7 +15,7 @@ public static class RepositoryExtensionsPostgres
         services.AddScoped<IAuthRepository, AuthRepositoryPostgres>();
         services.AddScoped<IMessageRepository, MessageRepositoryPostgres>();
         services.AddScoped<IUserRepository, UserRepositoryPostgres>();
-        
+
         return services;
     }
 }

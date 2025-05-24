@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Ca.Infrastructure.Persistence.Postgres.DependencyInjections;
+namespace Ca.Infrastructure.Persistence.Postgres;
 
 public static class ServiceExtensionsPostgres
 {
