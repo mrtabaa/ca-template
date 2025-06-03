@@ -1,5 +1,4 @@
 using Ca.Infrastructure.Persistence.Mongo;
-using Ca.Infrastructure.Persistence.Postgres.DependencyInjections;
 using Ca.Infrastructure.Persistence.Postgres;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
