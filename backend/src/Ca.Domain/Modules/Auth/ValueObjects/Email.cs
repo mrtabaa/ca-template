@@ -1,5 +1,5 @@
 using System.Text.RegularExpressions;
-using Ca.Domain.Modules.Shared.Base;
+using Ca.Domain.Modules.Common.Base;
 
 namespace Ca.Domain.Modules.Auth.ValueObjects;
 

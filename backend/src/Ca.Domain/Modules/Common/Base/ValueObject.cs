@@ -1,4 +1,4 @@
-namespace Ca.Domain.Modules.Shared.Base;
+namespace Ca.Domain.Modules.Common.Base;
 
 /// <summary>
 /// Base class for value objects. Implements value-based equality logic.

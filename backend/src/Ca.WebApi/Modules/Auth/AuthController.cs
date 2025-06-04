@@ -3,7 +3,7 @@ using Ca.Application.Modules.Auth.Commands;
 using Ca.Contracts.Requests.Auth;
 using Ca.Contracts.Responses.Auth;
 using Ca.Shared.Results;
-using Ca.WebApi.Common;
+using Ca.WebApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ca.WebApi.Modules.Auth

@@ -1,4 +1,4 @@
-using Ca.Domain.Modules.Shared.Enums;
+using Ca.Domain.Modules.Common.Enums;
 
 namespace Ca.Infrastructure.Modules.Auth.Mongo.Models;
 

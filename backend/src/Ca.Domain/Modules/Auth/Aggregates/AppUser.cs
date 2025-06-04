@@ -1,5 +1,5 @@
 using Ca.Domain.Modules.Auth.ValueObjects;
-using Ca.Domain.Modules.Shared.Exceptions;
+using Ca.Domain.Modules.Common.Exceptions;
 
 namespace Ca.Domain.Modules.Auth.Aggregates;
 

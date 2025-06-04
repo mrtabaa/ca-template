@@ -2,7 +2,7 @@ using Ca.Domain.Modules.Auth;
 using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.Auth.Enums;
 using Ca.Domain.Modules.Auth.Results;
-using Ca.Domain.Modules.Shared.Enums;
+using Ca.Domain.Modules.Common.Enums;
 using Ca.Infrastructure.Modules.Auth.Mongo.Models;
 using Ca.Infrastructure.Modules.Common.Mongo;
 using Ca.Infrastructure.Persistence.Mongo.Settings;

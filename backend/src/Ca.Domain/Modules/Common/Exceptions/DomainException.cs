@@ -1,4 +1,4 @@
-namespace Ca.Domain.Modules.Shared.Exceptions;
+namespace Ca.Domain.Modules.Common.Exceptions;
 
 public class DomainException : Exception
 {
