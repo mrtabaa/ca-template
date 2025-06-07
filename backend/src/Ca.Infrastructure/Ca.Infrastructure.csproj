@@ -6,10 +6,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AspNetCore.Identity.MongoDbCore" />
+      <PackageReference Include="Microsoft.AspNetCore.Authorization" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
       <PackageReference Include="MongoDB.Driver" />
+      <PackageReference Include="AspNetCore.Identity.MongoDbCore" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Persistence\Mongo\ServiceExtensions\" />
+      <Folder Include="Persistence\Postgres\Extensions\" />
     </ItemGroup>
 
 </Project>

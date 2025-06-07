@@ -6,7 +6,7 @@ using Ca.Infrastructure.Modules.Message.Mongo;
 using Ca.Infrastructure.Modules.User.Mongo;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Ca.Infrastructure.Persistence.Mongo;
+namespace Ca.Infrastructure.Persistence.Mongo.Extensions;
 
 public static class RepositoryExtensionsMongo
 {
