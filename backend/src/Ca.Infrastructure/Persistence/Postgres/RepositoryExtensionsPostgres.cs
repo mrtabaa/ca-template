@@ -10,7 +10,7 @@ namespace Ca.Infrastructure.Persistence.Postgres;
 
 public static class RepositoryExtensionsPostgres
 {
-    public static IServiceCollection AddPostgresRepositories(this IServiceCollection services)
+    public static IServiceCollection AddRepositoriesPostgres(this IServiceCollection services)
     {
         services.AddScoped<IAuthRepository, AuthRepositoryPostgres>();
         services.AddScoped<IMessageRepository, MessageRepositoryPostgres>();

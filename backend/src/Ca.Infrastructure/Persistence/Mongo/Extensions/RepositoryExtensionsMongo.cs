@@ -10,7 +10,7 @@ namespace Ca.Infrastructure.Persistence.Mongo.Extensions;
 
 public static class RepositoryExtensionsMongo
 {
-    public static IServiceCollection AddMongoRepositories(this IServiceCollection services)
+    public static IServiceCollection AddRepositoriesMongo(this IServiceCollection services)
     {
         services.AddScoped<IAuthRepository, AuthRepositoryMongo>();
         services.AddScoped<IMessageRepository, MessageRepositoryMongo>();

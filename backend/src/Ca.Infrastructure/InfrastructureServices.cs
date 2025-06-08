@@ -8,14 +8,13 @@ namespace Ca.Infrastructure;
 
 public static class InfrastructureServices
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
-        services.AddMongoDbSettingsService(config);
-        services.AddMongoIdentityService();
-        services.AddMongoRepositories();
+        services.AddServiceMongo();
+        services.AddIdentityServiceMongo();
+        services.AddRepositoriesMongo();
         
-        services.AddPostgresService(config);
-        services.AddPostgresRepositories();
+        services.AddRepositoriesPostgres();
         
         return services;
     }

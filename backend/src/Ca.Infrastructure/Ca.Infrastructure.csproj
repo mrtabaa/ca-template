@@ -6,11 +6,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Authorization" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+        
+<!--        MongoDB and Identity-->
       <PackageReference Include="MongoDB.Driver" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity" />
       <PackageReference Include="AspNetCore.Identity.MongoDbCore" />
     </ItemGroup>
 

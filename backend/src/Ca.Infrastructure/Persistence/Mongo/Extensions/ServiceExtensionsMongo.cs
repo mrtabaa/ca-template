@@ -1,25 +1,29 @@
-using Ca.Infrastructure.Persistence.Mongo.Settings;
-using Microsoft.Extensions.Configuration;
+using Ca.Shared.Configurations.Mongo.Settings;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 namespace Ca.Infrastructure.Persistence.Mongo.Extensions;
 
 public static class ServiceExtensionsMongo
 {
-    public static IServiceCollection AddMongoDbSettingsService(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddServiceMongo(this IServiceCollection services)
     {
-        IConfigurationSection section = config.GetSection(nameof(MyMongoDbSettings));
-    
-        services.Configure<MyMongoDbSettings>(settings =>
-        {
-            settings.ConnectionString = section[nameof(MyMongoDbSettings.ConnectionString)]
-                                        ?? throw new InvalidOperationException("MongoDB ConnectionString is missing.");
+        // get values
+        services.AddSingleton<IMyMongoDbSettings>(serviceProvider =>
+            serviceProvider.GetRequiredService<IOptions<MyMongoDbSettings>>().Value
+        );
 
-            settings.DatabaseName = section[nameof(MyMongoDbSettings.DatabaseName)]
-                                    ?? throw new InvalidOperationException("MongoDB DatabaseName is missing.");
-        });
+        // get connectionString to the db
+        services.AddSingleton<IMongoClient>(serviceProvider =>
+            {
+                MyMongoDbSettings myMongoDbSettings = serviceProvider.GetRequiredService<IOptions<MyMongoDbSettings>>().
+                    Value;
+
+                return new MongoClient(myMongoDbSettings.ConnectionString);
+            }
+        );
 
         return services;
-
     }
 }
