@@ -2,7 +2,6 @@ using Ca.Domain.Modules.Auth;
 using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.Auth.Enums;
 using Ca.Domain.Modules.Auth.Results;
-using Ca.Domain.Modules.Common.Enums;
 using Ca.Infrastructure.Modules.Auth.Mongo.Models;
 using Ca.Infrastructure.Modules.Common.Mongo;
 using Ca.Shared.Configurations.Mongo.Settings;
@@ -21,45 +20,55 @@ public class AuthRepositoryMongo : IAuthRepository
         if (existingUser != null)
         {
             return new AuthCreationResponse(
-                null // Enum's default value
+                AppUser: null // Enum's default value
             );
         }
 
+
         AppUserMongo appUserMongo = CommonMapperMongo.MapAppUserToAppUserMongo(appUser);
 
-        IdentityResult userCreatedResult = await _userManager.CreateAsync(appUserMongo, appUser.Password);
+        IdentityResult userCreatedResult = await _userManager.CreateAsync(
+            appUserMongo, appUser.Password
+        );
         if (!userCreatedResult.Succeeded)
         {
             List<string> errors = userCreatedResult.Errors.Select(e => e.Description).ToList();
 
-            if (errors.Any(e => e.Contains("is already taken", StringComparison.OrdinalIgnoreCase)))
+            if (errors.Any(e => e.Contains(
+                        "is already taken", StringComparison.OrdinalIgnoreCase
+                    )
+                ))
             {
-                if (errors.Any(e => e.Contains("email", StringComparison.OrdinalIgnoreCase)))
+                if (errors.Any(e => e.Contains("email", StringComparison.OrdinalIgnoreCase)
+                    ))
                 {
                     return new AuthCreationResponse(
-                        null
+                        AppUser: null
                     );
                 }
 
-                if (errors.Any(e => e.Contains("username", StringComparison.OrdinalIgnoreCase)))
+                if (errors.Any(e => e.Contains(
+                            "username", StringComparison.OrdinalIgnoreCase
+                        )
+                    ))
                 {
                     return new AuthCreationResponse(
-                        null,
+                        AppUser: null,
                         AuthCreationResult.UsernameAlreadyExists
                     );
                 }
             }
 
-            return new AuthCreationResponse(null);
+            return new AuthCreationResponse(AppUser: null);
         }
 
         IdentityResult roleResult = await _userManager.AddToRoleAsync(
-            appUserMongo, AppRolesProviderMongo.GetRoleStrValue(Roles.Member)
+            appUserMongo, AppRolesProviderMongo.GetRoleStrValue(Role.Member)
         );
         if (!roleResult.Succeeded) // Failed to add the role. Delete appUser from DB
         {
             await _userManager.DeleteAsync(appUserMongo);
-            return new AuthCreationResponse(null);
+            return new AuthCreationResponse(AppUser: null);
         }
 
         // Account created successfully.
@@ -82,8 +91,7 @@ public class AuthRepositoryMongo : IAuthRepository
         UserManager<AppUserMongo> userManager
     )
     {
-        IMongoDatabase dbName = client.GetDatabase(dbSettings.DatabaseName)
-                                ?? throw new ArgumentNullException(nameof(dbName), "The database name cannot be null.");
+        IMongoDatabase dbName = client.GetDatabase(dbSettings.DatabaseName);
         _collectionUsers = dbName.GetCollection<AppUserMongo>(CollectionNamesMongo.Users);
         _collectionRefreshTokens = dbName.GetCollection<RefreshTokenMongo>(CollectionNamesMongo.RefreshTokens);
         _userManager = userManager;
