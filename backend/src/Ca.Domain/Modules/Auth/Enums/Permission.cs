@@ -6,6 +6,7 @@ public enum Permission
     DeleteUser,
     EditOwnProfile,
     AccessAdminPanel,
+    AccessParkingPanel,
     ApprovePhotos,
     SendMessages
 }

@@ -6,9 +6,9 @@ public static class AppRolesProviderMongo
 {
     public static readonly AppRoleMongo[] AppRoles =
     [
-        new() { Name = GetRoleStrValue(role: Role.Admin) },
-        new() { Name = GetRoleStrValue(role: Role.Moderator) },
-        new() { Name = GetRoleStrValue(role: Role.Member) }
+        new() { Name = GetRoleStrValue(Role.AppAdmin) },
+        new() { Name = GetRoleStrValue(Role.Moderator) },
+        new() { Name = GetRoleStrValue(Role.Client) }
     ];
 
     public static string GetRoleStrValue(Role role) =>

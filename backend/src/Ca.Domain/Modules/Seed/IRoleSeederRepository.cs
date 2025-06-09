@@ -1,4 +1,4 @@
-namespace Ca.Domain.Modules.Seeder;
+namespace Ca.Domain.Modules.Seed;
 
 public interface IRoleSeederRepository
 {

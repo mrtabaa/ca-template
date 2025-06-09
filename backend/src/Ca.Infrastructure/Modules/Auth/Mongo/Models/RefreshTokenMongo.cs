@@ -18,7 +18,7 @@ public class RefreshTokenMongo
     public DateTimeOffset ExpiresAt { get; init; }
 
     public DateTimeOffset? UsedAt { get; set; } // Token is used before and not allowed again
-    public bool IsRevoked { get; set; } // Admin revoked session manually OR user logout
+    public bool IsRevoked { get; set; } // AppAdmin revoked session manually OR user logout
 
     [Required] public SessionMetadata? SessionMetadata { get; init; }
 }
