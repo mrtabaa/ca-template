@@ -6,6 +6,6 @@ namespace Ca.Infrastructure.Modules.Auth.Postgres;
 
 public class AuthRepositoryPostgres : IAuthRepository
 {
-    public async Task<AuthCreationResponse> CreateAsync(AppUser appUser, CancellationToken cancellationToken) =>
+    public async Task<AuthCreationResult> CreateAsync(AppUser appUser, CancellationToken cancellationToken) =>
         throw new NotImplementedException();
 }

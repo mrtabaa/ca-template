@@ -5,7 +5,7 @@ namespace Ca.Domain.Modules.Auth;
 
 public interface IAuthRepository
 {
-    public Task<AuthCreationResponse> CreateAsync(AppUser appUser, CancellationToken cancellationToken);
+    public Task<AuthCreationResult> CreateAsync(AppUser appUser, CancellationToken cancellationToken);
 
     // public Task<OperationResult<LoginResult>> VerifyAsync(
     //     VerifyDto verifyDto, SessionMetadata sessionMetadata, CancellationToken cancellationToken

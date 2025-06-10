@@ -14,7 +14,7 @@ public static class RepositoryExtensionsMongo
 {
     public static IServiceCollection AddRepositoriesMongo(this IServiceCollection services)
     {
-        services.AddScoped<IRoleSeederRepository, RoleSeederRepositoryMongo>();
+        services.AddScoped<ISeederRepository, SeederRepositoryMongo>();
         services.AddScoped<IAuthRepository, AuthRepositoryMongo>();
         services.AddScoped<IMessageRepository, MessageRepositoryMongo>();
         services.AddScoped<IUserRepository, UserRepositoryMongo>();

@@ -1,15 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-  
+
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Ca.Application\Ca.Application.csproj" />
-      <ProjectReference Include="..\Ca.Contracts\Ca.Contracts.csproj" />
-      <ProjectReference Include="..\Ca.Infrastructure\Ca.Infrastructure.csproj" />
-      <ProjectReference Include="..\Ca.Shared\Ca.Shared.csproj" />
+        <ProjectReference Include="..\Ca.Application\Ca.Application.csproj"/>
+        <ProjectReference Include="..\Ca.Contracts\Ca.Contracts.csproj"/>
+        <ProjectReference Include="..\Ca.Infrastructure\Ca.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Ca.Shared\Ca.Shared.csproj"/>
     </ItemGroup>
 
 </Project>

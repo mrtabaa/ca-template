@@ -5,23 +5,22 @@ using Ca.Domain.Shared;
 
 namespace Ca.Domain.Modules.Auth.ValueObjects;
 
-public sealed class Email : ValueObject
+public sealed class FirstName : ValueObject
 {
-    private Email(string value) => Value = value;
+    private FirstName(string value) => Value = value;
 
     public string Value { get; }
 
-    public static Email Create(string? emailRaw)
+    public static FirstName Create(string? firstNameRaw)
     {
-        string? validationError = emailRaw.ValidateValue(
-            nameof(emailRaw), CustomLengths.NameMin, CustomLengths.NameMax,
-            @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,5})+)$"
+        string? validationError = firstNameRaw.ValidateValue(
+            nameof(firstNameRaw), CustomLengths.NameMin, CustomLengths.NameMax
         );
 
         if (validationError is not null)
             throw new DomainException(validationError);
 
-        return new Email(emailRaw!.Trim());
+        return new FirstName(firstNameRaw!.Trim());
     }
 
     protected override IEnumerable<object?> GetEqualityComponents()

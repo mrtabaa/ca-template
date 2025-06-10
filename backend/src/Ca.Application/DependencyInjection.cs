@@ -9,7 +9,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<IRoleSeederService, RoleSeederService>();
+        services.AddScoped<ISeederService, SeederService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
 

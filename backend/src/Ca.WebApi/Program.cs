@@ -1,3 +1,4 @@
+using Ca.Application.Modules.Seed;
 using Ca.WebApi;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,11 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.UseSwaggerUI(options => { options.SwaggerEndpoint("/openapi/v1.json", "Ca.WebApi"); }
     );
+
+    // Seed App Admin
+    using IServiceScope scope = app.Services.CreateScope();
+    var seeder = scope.ServiceProvider.GetRequiredService<ISeederService>();
+    await seeder.SeedAppAdminAsync();
 }
 
 app.UseHttpsRedirection();

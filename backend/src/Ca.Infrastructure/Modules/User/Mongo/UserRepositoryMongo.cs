@@ -1,6 +1,5 @@
 using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.User;
-using Ca.Infrastructure.Modules.Auth.Mongo;
 using Ca.Infrastructure.Modules.Auth.Mongo.Models;
 using Ca.Infrastructure.Modules.Common.Mongo;
 using Ca.Shared.Configurations.Mongo.Settings;
@@ -41,16 +40,16 @@ public class UserRepositoryMongo : IUserRepository
         return CommonMapperMongo.MapMongoAppUserToAppUser(appUserMongo);
     }
 
-    public async Task<bool> ChangeUserNameAsync(string idStr, string newName, CancellationToken ct)
+    public async Task<bool> ChangeFirstNameAsync(string idStr, string newFirstName, CancellationToken ct)
     {
         ObjectId userId = ObjectIdHelperMongo.ConvertStringToObjectId(idStr);
 
         UpdateDefinition<AppUserMongo> updateDefinition = Builders<AppUserMongo>.Update.Set(
-            appUser => appUser.Name, newName
+            appUser => appUser.FirstName, newFirstName
         );
 
         UpdateResult result = await _collectionUsers.UpdateOneAsync(
-            appUser => appUser.Id == userId, updateDefinition, null, ct
+            appUser => appUser.Id == userId, updateDefinition, options: null, ct
         );
 
         return result.IsAcknowledged && result.ModifiedCount > 0;

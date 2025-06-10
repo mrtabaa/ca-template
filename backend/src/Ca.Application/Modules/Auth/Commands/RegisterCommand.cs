@@ -1,9 +1,9 @@
 namespace Ca.Application.Modules.Auth.Commands;
 
-public record RegisterCommand
-(
-    string Name,
+public record RegisterCommand(
+    string FirstName,
+    string LastName,
     string Email,
-    string Password,
-    bool IsAlive
+    string UserName,
+    string Password
 );

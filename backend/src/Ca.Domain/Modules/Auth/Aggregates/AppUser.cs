@@ -1,54 +1,60 @@
 using Ca.Domain.Modules.Auth.ValueObjects;
-using Ca.Domain.Modules.Common.Exceptions;
 
 namespace Ca.Domain.Modules.Auth.Aggregates;
 
 // Aggregate root
 public class AppUser
 {
+    // Used to create a new AppUser object
     private AppUser()
     {
     }
 
-    public AppUser(string name, string email, bool isAlive)
-    {
-        Name = name;
-        Email = Email.Create(email); // Use of ValueObject
-        IsAlive = isAlive;
-    }
-
-    public string Name { get; private set; } = string.Empty;
+    public FirstName FirstName { get; private set; }
+    public LastName LastName { get; private set; }
     public Email Email { get; private set; }
-    public string Password { get; private set; } = string.Empty;
-    public bool IsAlive { get; private set; } = true;
+    public UserName UserName { get; private set; }
+    public Password? Password { get; private set; }
 
-    public static AppUser Create(string name, string emailRaw, string password)
+    public static AppUser Create(
+        string firstNameRaw, string lastNameRaw, string emailRaw, string userNameRaw, string passwordRaw
+    )
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new DomainException(nameof(name), "Name cannot be empty");
-
-        var email = Email.Create(emailRaw); // ✅ value object handles validation
-
-        if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
-            throw new DomainException(nameof(password), "Password must be at least 8 characters");
-
+        var firstName = FirstName.Create(firstNameRaw); // value object handles validation
+        var lastName = LastName.Create(lastNameRaw);
+        var email = Email.Create(emailRaw);
+        var userName = UserName.Create(userNameRaw);
+        var password = Password.Create(passwordRaw);
 
         return new AppUser
         {
-            Name = name,
-            Email = email, // Use of ValueObject
-            Password = password,
-            IsAlive = true
+            FirstName = firstName, // Use of ValueObject
+            LastName = lastName,
+            Email = email,
+            UserName = userName,
+            Password = password
         };
     }
 
-    public void ChangeName(string newName)
-    {
-        if (string.IsNullOrEmpty(newName))
-            throw new DomainException(nameof(newName), " cannot be null or empty");
+    public static AppUser Rehydrate(string firstNameRaw, string lastNameRaw, string emailRaw, string userNameRaw) =>
+        new()
+        {
+            FirstName = FirstName.Create(firstNameRaw),
+            LastName = LastName.Create(lastNameRaw),
+            Email = Email.Create(emailRaw),
+            UserName = UserName.Create(emailRaw)
+        };
 
-        Name = newName;
+    public void ChangeFirstName(string? newFirstName)
+    {
+        FirstName = FirstName.Create(newFirstName);
     }
 
-    public void ChangePassword(string newPassword) => Password = newPassword;
+    public void ChangeLastName(string? newLastName)
+    {
+        LastName = LastName.Create(newLastName);
+    }
+
+    public void ChangePassword(string newPasswordRaw) =>
+        Password = Password.Create(newPasswordRaw);
 }

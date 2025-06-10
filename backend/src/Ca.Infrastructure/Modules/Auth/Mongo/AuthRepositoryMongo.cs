@@ -14,21 +14,22 @@ public class AuthRepositoryMongo : IAuthRepository
 {
     #region CRUD
 
-    public async Task<AuthCreationResponse> CreateAsync(AppUser appUser, CancellationToken cancellationToken)
+    public async Task<AuthCreationResult> CreateAsync(AppUser appUser, CancellationToken cancellationToken)
     {
-        AppUserMongo? existingUser = await _userManager.FindByEmailAsync(appUser.Email.Value);
+        // Check before creation for performance since username/email are checked in _userManager.CreateAsync 
+        AppUserMongo? existingUser = await _userManager.FindByEmailAsync(appUser.Email?.Value);
         if (existingUser != null)
         {
-            return new AuthCreationResponse(
-                AppUser: null // Enum's default value
+            return new AuthCreationResult(
+                AppUser: null,
+                AuthCreationStatus.EmailAlreadyExists
             );
         }
-
 
         AppUserMongo appUserMongo = CommonMapperMongo.MapAppUserToAppUserMongo(appUser);
 
         IdentityResult userCreatedResult = await _userManager.CreateAsync(
-            appUserMongo, appUser.Password
+            appUserMongo, appUser.Password?.Value
         );
         if (!userCreatedResult.Succeeded)
         {
@@ -42,7 +43,7 @@ public class AuthRepositoryMongo : IAuthRepository
                 if (errors.Any(e => e.Contains("email", StringComparison.OrdinalIgnoreCase)
                     ))
                 {
-                    return new AuthCreationResponse(
+                    return new AuthCreationResult(
                         AppUser: null
                     );
                 }
@@ -52,27 +53,27 @@ public class AuthRepositoryMongo : IAuthRepository
                         )
                     ))
                 {
-                    return new AuthCreationResponse(
+                    return new AuthCreationResult(
                         AppUser: null,
-                        AuthCreationResult.UsernameAlreadyExists
+                        AuthCreationStatus.UsernameAlreadyExists
                     );
                 }
             }
 
-            return new AuthCreationResponse(AppUser: null);
+            return new AuthCreationResult(AppUser: null);
         }
 
         IdentityResult roleResult = await _userManager.AddToRoleAsync(
-            appUserMongo, AppRolesProviderMongo.GetRoleStrValue(Role.Client)
+            appUserMongo, nameof(Role.Client)
         );
         if (!roleResult.Succeeded) // Failed to add the role. Delete appUser from DB
         {
             await _userManager.DeleteAsync(appUserMongo);
-            return new AuthCreationResponse(AppUser: null);
+            return new AuthCreationResult(AppUser: null);
         }
 
         // Account created successfully.
-        return new AuthCreationResponse(appUser);
+        return new AuthCreationResult(appUser);
     }
 
     #endregion CRUD

@@ -1,8 +1,8 @@
 namespace Ca.Contracts.Responses.Auth;
 
-public record RegisterResponse
-(
-    string Name,
+public record RegisterResponse(
+    string FirstName,
+    string LastName,
     string Email,
-    bool IsAlive
+    string UserName
 );

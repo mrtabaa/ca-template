@@ -8,11 +8,12 @@ public static class CommonMapperMongo
     internal static AppUserMongo MapAppUserToAppUserMongo(AppUser appUser) =>
         new()
         {
-            Name = appUser.Name,
+            FirstName = appUser.FirstName.Value,
+            LastName = appUser.LastName.Value,
             Email = appUser.Email.Value,
-            IsAlive = appUser.IsAlive
+            UserName = appUser.UserName.Value,
         };
 
     internal static AppUser MapMongoAppUserToAppUser(AppUserMongo appUserMongo) =>
-        new(appUserMongo.Name, appUserMongo.Email, appUserMongo.IsAlive);
+        AppUser.Rehydrate(appUserMongo.FirstName, appUserMongo.LastName, appUserMongo.Email, appUserMongo.UserName);
 }

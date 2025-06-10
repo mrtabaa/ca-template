@@ -7,6 +7,6 @@ namespace Ca.Infrastructure.Modules.Auth.Mongo.Models;
 [CollectionName("users")]
 public class AppUserMongo : MongoIdentityUser<ObjectId>
 {
-    public string Name { get; init; } = string.Empty;
-    public bool IsAlive { get; init; }
+    public string FirstName { get; init; } = string.Empty;
+    public string LastName { get; init; } = string.Empty;
 }

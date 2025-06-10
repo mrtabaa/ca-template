@@ -13,10 +13,12 @@ public class AuthService(IAuthRepository authRepository) : IAuthService
         RegisterCommand command, CancellationToken ct
     )
     {
-        var appUser = AppUser.Create(command.Name, command.Email, command.Password);
+        var appUser = AppUser.Create(
+            command.FirstName, command.LastName, command.Email, command.UserName, command.Password
+        );
 
-        AuthCreationResponse response = await authRepository.CreateAsync(appUser, ct);
+        AuthCreationResult result = await authRepository.CreateAsync(appUser, ct);
 
-        return AuthMapper.MapAppUserToRegisterResult(response);
+        return AuthMapper.MapAppUserToRegisterResult(result);
     }
 }

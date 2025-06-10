@@ -12,11 +12,11 @@ public class UserService(IUserRepository userRepository) : IUserService
         AppUser? user = await userRepository.GetUserByIdAsync(command.IdStr, ct);
 
         if (user is null)
-            return new OperationResult(false, new CustomError(ResultErrorCode.NetIdentityFailed, ""));
+            return new OperationResult(IsSuccess: false, new CustomError(ResultErrorCode.NetIdentityFailed, ""));
 
-        user?.ChangeName(command.NewName);
+        user?.ChangeFirstName(command.NewName);
 
-        return new OperationResult(true, null);
+        return new OperationResult(IsSuccess: true, Error: null);
     }
 
     public async Task<AppUser> GetUserByIdAsync(string idStr, CancellationToken ct) =>
