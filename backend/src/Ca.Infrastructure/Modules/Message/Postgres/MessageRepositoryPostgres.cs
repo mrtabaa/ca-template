@@ -6,6 +6,6 @@ namespace Ca.Infrastructure.Modules.Message.Postgres;
 
 public class MessageRepositoryPostgres : IMessageRepository
 {
-    public async Task<AuthCreationResult> CreateAsync(AppUser appUser, CancellationToken cancellationToken) =>
+    public async Task<AuthUserCreationResult> CreateAsync(AppUser appUser, CancellationToken cancellationToken) =>
         throw new NotImplementedException();
 }

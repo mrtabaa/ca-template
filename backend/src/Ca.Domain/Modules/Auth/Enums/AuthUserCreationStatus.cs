@@ -1,6 +1,6 @@
 namespace Ca.Domain.Modules.Auth.Enums;
 
-public enum AuthCreationStatus
+public enum AuthUserCreationStatus
 {
     Succeeded,
     EmailAlreadyExists,

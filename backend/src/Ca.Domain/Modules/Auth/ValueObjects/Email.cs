@@ -14,7 +14,7 @@ public sealed class Email : ValueObject
     public static Email Create(string? emailRaw)
     {
         string? validationError = emailRaw.ValidateValue(
-            nameof(emailRaw), CustomLengths.NameMin, CustomLengths.NameMax,
+            nameof(emailRaw), minLength: -1, CustomLengths.EmailMax,
             @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,5})+)$"
         );
 

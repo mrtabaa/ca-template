@@ -7,21 +7,21 @@ namespace Ca.Application.Modules.Auth;
 
 public static class AuthMapper
 {
-    public static OperationResult<RegisterResponse> MapAppUserToRegisterResult(AuthCreationResult authResult) =>
-        authResult.AppUser is not null
+    public static OperationResult<RegisterResponse> MapAppUserToRegisterResult(AuthUserCreationResult authUserResult) =>
+        authUserResult.AppUser is not null
             ? new OperationResult<RegisterResponse>(
                 IsSuccess: true,
                 new RegisterResponse(
-                    authResult.AppUser.FirstName.Value,
-                    authResult.AppUser.LastName.Value,
-                    authResult.AppUser.Email.Value,
-                    authResult.AppUser.UserName.Value
+                    authUserResult.AppUser.Name.Value,
+                    authUserResult.AppUser.LastName.Value,
+                    authUserResult.AppUser.Email.Value,
+                    authUserResult.AppUser.UserName.Value
                 ),
                 Error: null
             )
-            : authResult.AuthCreationStatus switch
+            : authUserResult.AuthUserCreationStatus switch
             {
-                AuthCreationStatus.EmailAlreadyExists => new OperationResult<RegisterResponse>(
+                AuthUserCreationStatus.EmailAlreadyExists => new OperationResult<RegisterResponse>(
                     IsSuccess: false,
                     Error: new CustomError(ResultErrorCode.IsEmailAlreadyConfirmed, "User already exists.")
                 ),

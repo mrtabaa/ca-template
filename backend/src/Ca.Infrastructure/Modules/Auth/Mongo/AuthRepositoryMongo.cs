@@ -1,3 +1,4 @@
+using Ca.Domain.Modules.AccessControl.Enums;
 using Ca.Domain.Modules.Auth;
 using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.Auth.Enums;
@@ -14,15 +15,41 @@ public class AuthRepositoryMongo : IAuthRepository
 {
     #region CRUD
 
-    public async Task<AuthCreationResult> CreateAsync(AppUser appUser, CancellationToken cancellationToken)
+    /// <summary>
+    ///     Create a new user.
+    /// </summary>
+    /// <param name="appUser"></param>
+    /// <param name="roleType"></param>
+    /// <returns>AuthUserCreationResult</returns>
+    public async Task<AuthUserCreationResult> CreateAppUserAsync(
+        AppUser appUser, AccessRoleType roleType
+    ) =>
+        await ImplementCreateUserAppAsync(appUser, roleType);
+
+    /// <summary>
+    ///     Seed SuperAdmin AppUser.
+    /// </summary>
+    /// <param name="appUser"></param>
+    /// <param name="roleType"></param>
+    /// <returns>AuthUserCreationResult</returns>
+    public async Task<AuthUserCreationResult> SeedSuperAdminAppUserAsync(AppUser appUser, AccessRoleType roleType) =>
+        await ImplementCreateUserAppAsync(appUser, roleType);
+
+    /// <summary>
+    ///     The implementation of CreateAppUserAsync.
+    /// </summary>
+    /// <param name="appUser"></param>
+    /// <param name="roleType"></param>
+    /// <returns></returns>
+    private async Task<AuthUserCreationResult> ImplementCreateUserAppAsync(AppUser appUser, AccessRoleType roleType)
     {
-        // Check before creation for performance since username/email are checked in _userManager.CreateAsync 
+        // Check before creation for performance since username/email are checked in _userManager.CreateAppUserAsync 
         AppUserMongo? existingUser = await _userManager.FindByEmailAsync(appUser.Email?.Value);
         if (existingUser != null)
         {
-            return new AuthCreationResult(
+            return new AuthUserCreationResult(
                 AppUser: null,
-                AuthCreationStatus.EmailAlreadyExists
+                AuthUserCreationStatus.EmailAlreadyExists
             );
         }
 
@@ -43,7 +70,7 @@ public class AuthRepositoryMongo : IAuthRepository
                 if (errors.Any(e => e.Contains("email", StringComparison.OrdinalIgnoreCase)
                     ))
                 {
-                    return new AuthCreationResult(
+                    return new AuthUserCreationResult(
                         AppUser: null
                     );
                 }
@@ -53,32 +80,32 @@ public class AuthRepositoryMongo : IAuthRepository
                         )
                     ))
                 {
-                    return new AuthCreationResult(
+                    return new AuthUserCreationResult(
                         AppUser: null,
-                        AuthCreationStatus.UsernameAlreadyExists
+                        AuthUserCreationStatus.UsernameAlreadyExists
                     );
                 }
             }
 
-            return new AuthCreationResult(AppUser: null);
+            return new AuthUserCreationResult(AppUser: null);
         }
 
         IdentityResult roleResult = await _userManager.AddToRoleAsync(
-            appUserMongo, nameof(Role.Client)
+            appUserMongo, roleType.ToString()
         );
         if (!roleResult.Succeeded) // Failed to add the role. Delete appUser from DB
         {
             await _userManager.DeleteAsync(appUserMongo);
-            return new AuthCreationResult(AppUser: null);
+            return new AuthUserCreationResult(AppUser: null);
         }
 
         // Account created successfully.
-        return new AuthCreationResult(appUser);
+        return new AuthUserCreationResult(appUser);
     }
 
     #endregion CRUD
 
-    #region Db and Token Settings
+    #region Db Settings
 
     private readonly IMongoCollection<AppUserMongo> _collectionUsers;
     private readonly IMongoCollection<RefreshTokenMongo> _collectionRefreshTokens;

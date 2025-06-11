@@ -1,10 +1,8 @@
 using Ca.Domain.Modules.Auth;
 using Ca.Domain.Modules.Message;
-using Ca.Domain.Modules.Seed;
 using Ca.Domain.Modules.User;
 using Ca.Infrastructure.Modules.Auth.Mongo;
 using Ca.Infrastructure.Modules.Message.Mongo;
-using Ca.Infrastructure.Modules.Seed.Mongo;
 using Ca.Infrastructure.Modules.User.Mongo;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +12,6 @@ public static class RepositoryExtensionsMongo
 {
     public static IServiceCollection AddRepositoriesMongo(this IServiceCollection services)
     {
-        services.AddScoped<ISeederRepository, SeederRepositoryMongo>();
         services.AddScoped<IAuthRepository, AuthRepositoryMongo>();
         services.AddScoped<IMessageRepository, MessageRepositoryMongo>();
         services.AddScoped<IUserRepository, UserRepositoryMongo>();

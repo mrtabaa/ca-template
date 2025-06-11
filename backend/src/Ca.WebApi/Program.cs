@@ -1,4 +1,6 @@
-using Ca.Application.Modules.Seed;
+using Ca.Application.Modules.Auth;
+using Ca.Contracts.Responses.Auth;
+using Ca.Shared.Results;
 using Ca.WebApi;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -22,10 +24,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options => { options.SwaggerEndpoint("/openapi/v1.json", "Ca.WebApi"); }
     );
 
-    // Seed App Admin
+    // Seed SuperAdmin
     using IServiceScope scope = app.Services.CreateScope();
-    var seeder = scope.ServiceProvider.GetRequiredService<ISeederService>();
-    await seeder.SeedAppAdminAsync();
+    var authService = scope.ServiceProvider.GetRequiredService<IAuthService>();
+    OperationResult<RegisterResponse> result = await authService.SeedSuperAdminAppUserAsync();
+    Console.WriteLine(
+        result.IsSuccess
+            ? "SuperAdmin created successfully."
+            : $"SuperAdmin creation failed with error {result.Error?.Message}."
+    );
 }
 
 app.UseHttpsRedirection();

@@ -5,22 +5,22 @@ using Ca.Domain.Shared;
 
 namespace Ca.Domain.Modules.Auth.ValueObjects;
 
-public sealed class LastName : ValueObject
+public sealed class Name : ValueObject
 {
-    private LastName(string value) => Value = value;
+    private Name(string value) => Value = value;
 
     public string Value { get; }
 
-    public static LastName Create(string? lastNameRaw)
+    public static Name Create(string? nameRaw)
     {
-        string? validationError = lastNameRaw.ValidateValue(
-            nameof(lastNameRaw), CustomLengths.NameMin, CustomLengths.NameMax
+        string? validationError = nameRaw.ValidateValue(
+            nameof(nameRaw), CustomLengths.NameMin, CustomLengths.NameMax
         );
 
         if (validationError is not null)
             throw new DomainException(validationError);
 
-        return new LastName(lastNameRaw!.Trim());
+        return new Name(nameRaw!.Trim());
     }
 
     protected override IEnumerable<object?> GetEqualityComponents()

@@ -1,24 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    
+
     <ItemGroup>
-      <ProjectReference Include="..\Ca.Domain\Ca.Domain.csproj" />
-      <ProjectReference Include="..\Ca.Shared\Ca.Shared.csproj" />
+        <ProjectReference Include="..\Ca.Domain\Ca.Domain.csproj"/>
+        <ProjectReference Include="..\Ca.Shared\Ca.Shared.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
-        
-<!--        MongoDB and Identity-->
-      <PackageReference Include="MongoDB.Driver" />
-      <PackageReference Include="Microsoft.AspNetCore.Identity" />
-      <PackageReference Include="AspNetCore.Identity.MongoDbCore" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
+
+        <!--        MongoDB and Identity-->
+        <PackageReference Include="MongoDB.Driver"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity"/>
+        <PackageReference Include="AspNetCore.Identity.MongoDbCore"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Persistence\Mongo\ServiceExtensions\" />
-      <Folder Include="Persistence\Postgres\Extensions\" />
+        <Folder Include="Persistence\Mongo\ServiceExtensions\"/>
+        <Folder Include="Persistence\Postgres\Extensions\"/>
     </ItemGroup>
 
 </Project>

@@ -8,11 +8,11 @@ public static class ApplicationServiceExtensions
         this IServiceCollection services, IConfiguration config
     )
     {
-        services.Configure<AppAdminSeedInfo>(
-            config.GetSection(nameof(AppAdminSeedInfo))
+        services.Configure<SuperAdminSeedInfo>(
+            config.GetSection(nameof(SuperAdminSeedInfo))
         );
 
-        services.AddOptions<AppAdminSeedInfo>().Bind(config.GetSection(nameof(AppAdminSeedInfo))).Validate(
+        services.AddOptions<SuperAdminSeedInfo>().Bind(config.GetSection(nameof(SuperAdminSeedInfo))).Validate(
             info => !string.IsNullOrWhiteSpace(info.FirstName) &&
                     !string.IsNullOrWhiteSpace(info.LastName) &&
                     !string.IsNullOrWhiteSpace(info.Email) &&

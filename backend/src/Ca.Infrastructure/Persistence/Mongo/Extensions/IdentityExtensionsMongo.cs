@@ -1,5 +1,6 @@
 using AspNetCore.Identity.MongoDbCore.Extensions;
 using AspNetCore.Identity.MongoDbCore.Infrastructure;
+using Ca.Infrastructure.Modules.AccessControl.Mongo.Models;
 using Ca.Infrastructure.Modules.Auth.Mongo.Models;
 using Ca.Shared.Configurations.Mongo.Settings;
 using Microsoft.AspNetCore.Identity;

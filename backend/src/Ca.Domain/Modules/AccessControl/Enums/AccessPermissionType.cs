@@ -1,6 +1,6 @@
-namespace Ca.Domain.Modules.Auth.Enums;
+namespace Ca.Domain.Modules.AccessControl.Enums;
 
-public enum Permission
+public enum AccessPermissionType
 {
     AccessSuperAdminPanel,
     BanUser,

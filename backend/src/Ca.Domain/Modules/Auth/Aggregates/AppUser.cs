@@ -1,4 +1,6 @@
+using Ca.Domain.Modules.AccessControl.Enums;
 using Ca.Domain.Modules.Auth.ValueObjects;
+using Ca.Domain.Modules.Common.Exceptions;
 
 namespace Ca.Domain.Modules.Auth.Aggregates;
 
@@ -10,25 +12,38 @@ public class AppUser
     {
     }
 
-    public FirstName FirstName { get; private set; }
-    public LastName LastName { get; private set; }
+    public Name Name { get; private set; }
+    public Name LastName { get; private set; }
     public Email Email { get; private set; }
-    public UserName UserName { get; private set; }
+    public Name UserName { get; private set; }
     public Password? Password { get; private set; }
+
+    public static AppUser CreateSuperAdmin(
+        string firstNameRaw, string lastNameRaw, string emailRaw, string userNameRaw, string roleNameRaw,
+        string passwordRaw
+    )
+    {
+        if (roleNameRaw != AccessRoleType.SuperAdmin.ToString()) // Enforce SuperAdmin role name
+            throw new DomainException("SuperAdmin user name must be 'SuperAdmin'.");
+
+        return Create(
+            firstNameRaw, lastNameRaw, emailRaw, userNameRaw, passwordRaw
+        );
+    }
 
     public static AppUser Create(
         string firstNameRaw, string lastNameRaw, string emailRaw, string userNameRaw, string passwordRaw
     )
     {
-        var firstName = FirstName.Create(firstNameRaw); // value object handles validation
-        var lastName = LastName.Create(lastNameRaw);
+        var firstName = Name.Create(firstNameRaw); // value object handles validation
+        var lastName = Name.Create(lastNameRaw);
         var email = Email.Create(emailRaw);
-        var userName = UserName.Create(userNameRaw);
+        var userName = Name.Create(userNameRaw);
         var password = Password.Create(passwordRaw);
 
         return new AppUser
         {
-            FirstName = firstName, // Use of ValueObject
+            Name = firstName, // Use of ValueObject
             LastName = lastName,
             Email = email,
             UserName = userName,
@@ -39,20 +54,20 @@ public class AppUser
     public static AppUser Rehydrate(string firstNameRaw, string lastNameRaw, string emailRaw, string userNameRaw) =>
         new()
         {
-            FirstName = FirstName.Create(firstNameRaw),
-            LastName = LastName.Create(lastNameRaw),
+            Name = Name.Create(firstNameRaw),
+            LastName = Name.Create(lastNameRaw),
             Email = Email.Create(emailRaw),
-            UserName = UserName.Create(emailRaw)
+            UserName = Name.Create(emailRaw)
         };
 
     public void ChangeFirstName(string? newFirstName)
     {
-        FirstName = FirstName.Create(newFirstName);
+        Name = Name.Create(newFirstName);
     }
 
     public void ChangeLastName(string? newLastName)
     {
-        LastName = LastName.Create(newLastName);
+        LastName = Name.Create(newLastName);
     }
 
     public void ChangePassword(string newPasswordRaw) =>

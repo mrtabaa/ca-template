@@ -8,10 +8,10 @@ public static class CommonMapperMongo
     internal static AppUserMongo MapAppUserToAppUserMongo(AppUser appUser) =>
         new()
         {
-            FirstName = appUser.FirstName.Value,
+            FirstName = appUser.Name.Value,
             LastName = appUser.LastName.Value,
             Email = appUser.Email.Value,
-            UserName = appUser.UserName.Value,
+            UserName = appUser.UserName.Value
         };
 
     internal static AppUser MapMongoAppUserToAppUser(AppUserMongo appUserMongo) =>

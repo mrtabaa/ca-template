@@ -4,7 +4,7 @@ using Ca.Domain.Modules.Auth.Enums;
 
 namespace Ca.Domain.Modules.Auth.Results;
 
-public record AuthCreationResult(
+public record AuthUserCreationResult(
     AppUser? AppUser,
-    [Optional] AuthCreationStatus AuthCreationStatus
+    [Optional] AuthUserCreationStatus AuthUserCreationStatus
 );
