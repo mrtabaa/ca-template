@@ -2,7 +2,7 @@ namespace Ca.Domain.Modules.Auth.Enums;
 
 public enum Role
 {
-    AppAdmin,
+    SuperAdmin,
     Admin,
     Moderator,
     Parking,

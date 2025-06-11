@@ -16,7 +16,7 @@ public class SeederService(ISeederRepository seederRepository, IOptions<AppAdmin
             seedInfo.FirstName, seedInfo.LastName, seedInfo.Email, seedInfo.UserName, seedInfo.Password
         );
 
-        await seederRepository.SeedAppAdminAsync(appUser);
+        await seederRepository.SeedSuperAdminAsync(appUser);
     }
 
     public async Task SeedRolesAndPermissionsAsync()

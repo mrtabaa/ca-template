@@ -4,7 +4,7 @@ namespace Ca.Domain.Modules.Seed;
 
 public interface ISeederRepository
 {
-    public Task SeedAppAdminAsync(AppUser appUser);
+    public Task SeedSuperAdminAsync(AppUser appUser);
 
     public Task SeedRolesAndPermissionsAsync();
 }

@@ -6,11 +6,11 @@ public static class PolicyServiceExtensions
         // Add authorization policies for roles
         // services.AddAuthorizationBuilder().AddPolicy(
         //     name: AppVariablesExtensions.RequiredAdminRole,
-        //     configurePolicy: policy => policy.RequireRole(EnumExtensions.GetRoleStrValue(Role.AppAdmin))
+        //     configurePolicy: policy => policy.RequireRole(EnumExtensions.GetRoleStrValue(Role.SuperAdmin))
         // ).AddPolicy(
         //     name: AppVariablesExtensions.RequiredModeratorRole,
         //     configurePolicy: policy => policy.RequireRole(
-        //         EnumExtensions.GetRoleStrValue(Role.AppAdmin), EnumExtensions.GetRoleStrValue(Role.Moderator)
+        //         EnumExtensions.GetRoleStrValue(Role.SuperAdmin), EnumExtensions.GetRoleStrValue(Role.Moderator)
         //     )
         // );
         services;

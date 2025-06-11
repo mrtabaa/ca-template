@@ -17,12 +17,12 @@ public class SeederRepositoryMongo(
 )
     : ISeederRepository
 {
-    public async Task SeedAppAdminAsync(AppUser appUser)
+    public async Task SeedSuperAdminAsync(AppUser appUser)
     {
-        AppUserMongo? existingAppAdmin = await userManager.FindByEmailAsync(appUser.Email?.Value);
-        if (existingAppAdmin != null)
+        AppUserMongo? existingSuperAdmin = await userManager.FindByEmailAsync(appUser.Email?.Value);
+        if (existingSuperAdmin != null)
         {
-            logger.LogWarning("AppAdmin exists already.");
+            logger.LogWarning("SuperAdmin exists already.");
             return;
         }
 
@@ -36,6 +36,12 @@ public class SeederRepositoryMongo(
 
     public async Task SeedRolesAndPermissionsAsync()
     {
+        await EnsureRoleWithPermissions(
+            Role.SuperAdmin, [
+                Permission.AccessSuperAdminPanel
+            ]
+        );
+        
         await EnsureRoleWithPermissions(
             Role.Admin, [
                 Permission.BanUser,

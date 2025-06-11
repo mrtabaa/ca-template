@@ -2,6 +2,7 @@ namespace Ca.Domain.Modules.Auth.Enums;
 
 public enum Permission
 {
+    AccessSuperAdminPanel,
     BanUser,
     DeleteUser,
     EditOwnProfile,
