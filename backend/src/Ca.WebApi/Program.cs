@@ -41,7 +41,8 @@ if (app.Environment.IsDevelopment())
 
     var accessControlService = scope.ServiceProvider.GetRequiredService<IAccessControlService>();
     var myCommand = new AccessRoleCommand(seedInfo.RoleName, [AccessPermissionType.AccessSuperAdminPanel.ToString()]);
-    OperationResult<AccessRoleResponse> result = await accessControlService.SeedSuperAdminRoleAndPermissionsAsync(myCommand);
+    OperationResult<AccessRoleResponse> result =
+        await accessControlService.SeedSuperAdminRoleAndPermissionsAsync(myCommand);
     Console.WriteLine(result.IsSuccess ? "SuperAdmin role created successfully." : "SuperAdmin role creation failed.");
 
     var authService = scope.ServiceProvider.GetRequiredService<IAuthService>();
