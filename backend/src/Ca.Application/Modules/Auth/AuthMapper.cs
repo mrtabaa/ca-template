@@ -5,29 +5,37 @@ using Ca.Shared.Results;
 
 namespace Ca.Application.Modules.Auth;
 
-public static class AuthMapper
+internal static class AuthMapper
 {
-    public static OperationResult<RegisterResponse> MapAppUserToRegisterResult(AuthUserCreationResult authUserResult) =>
-        authUserResult.AppUser is not null
+    internal static OperationResult<RegisterResponse> MapAppUserToRegisterResult(AuthUserCreationResult result) =>
+        result.Succeeded && result.AppUser is not null
             ? new OperationResult<RegisterResponse>(
-                IsSuccess: true,
+                result.Succeeded,
                 new RegisterResponse(
-                    authUserResult.AppUser.Name.Value,
-                    authUserResult.AppUser.LastName.Value,
-                    authUserResult.AppUser.Email.Value,
-                    authUserResult.AppUser.UserName.Value
+                    result.AppUser.Name.Value,
+                    result.AppUser.LastName.Value,
+                    result.AppUser.Email.Value,
+                    result.AppUser.UserName.Value
                 ),
                 Error: null
             )
-            : authUserResult.AuthUserCreationStatus switch
+            : result.ErrorType switch
             {
-                AuthUserCreationStatus.EmailAlreadyExists => new OperationResult<RegisterResponse>(
+                AuthUserCreationErrorType.EmailAlreadyExists => new OperationResult<RegisterResponse>(
                     IsSuccess: false,
-                    Error: new CustomError(ResultErrorCode.IsEmailAlreadyConfirmed, "User already exists.")
+                    Error: new CustomError(AuthUserCreationErrorType.EmailAlreadyExists, result.ErrorMessage)
+                ),
+                AuthUserCreationErrorType.UsernameAlreadyExists => new OperationResult<RegisterResponse>(
+                    IsSuccess: false,
+                    Error: new CustomError(AuthUserCreationErrorType.UsernameAlreadyExists, result.ErrorMessage)
+                ),
+                AuthUserCreationErrorType.AddRoleFailed => new OperationResult<RegisterResponse>(
+                    IsSuccess: false,
+                    Error: new CustomError(AuthUserCreationErrorType.AddRoleFailed, result.ErrorMessage)
                 ),
                 _ => new OperationResult<RegisterResponse>(
                     IsSuccess: false,
-                    Error: new CustomError(ResultErrorCode.IsEmailAlreadyConfirmed, "Creation failed.")
+                    Error: new CustomError(AuthUserCreationErrorType.Unknown, result.ErrorMessage)
                 )
             };
 }

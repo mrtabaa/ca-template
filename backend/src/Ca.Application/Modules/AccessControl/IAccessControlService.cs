@@ -1,9 +1,12 @@
-using Ca.Domain.Modules.AccessControl.ValueObjects;
+using Ca.Application.Modules.AccessControl.Commands;
+using Ca.Contracts.Responses.AccessControl;
+using Ca.Shared.Results;
 
 namespace Ca.Application.Modules.AccessControl;
 
 public interface IAccessControlService
 {
-    public Task AssignRoleAndPermissionsAsync(string roleName, IEnumerable<Permission> permissions);
-    public Task SeedSuperAdminRoleAndPermissionsAsync(string roleName);
+    public Task<OperationResult<AccessRoleResponse>> UpsertRoleAsync(AccessRoleCommand command);
+
+    public Task<OperationResult<AccessRoleResponse>> SeedSuperAdminRoleAndPermissionsAsync(AccessRoleCommand command);
 }

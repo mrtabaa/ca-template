@@ -2,6 +2,7 @@ using Ca.Application.Modules.Auth;
 using Ca.Application.Modules.Auth.Commands;
 using Ca.Contracts.Requests.Auth;
 using Ca.Contracts.Responses.Auth;
+using Ca.Domain.Modules.Auth.Enums;
 using Ca.Shared.Results;
 using Ca.WebApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,9 @@ public class AuthController(IAuthService authService) : BaseApiController
 {
     public async Task<ActionResult<RegisterResponse>> Create(RegisterRequest request, CancellationToken ct)
     {
+        if (request.Password != request.ConfirmPassword)
+            return BadRequest("Passwords do not match!");
+
         RegisterCommand command = AuthRequestMapper.MapRegisterRequestToRegisterCommand(request);
 
         OperationResult<RegisterResponse> result = await authService.CreateAsync(command);
@@ -20,8 +24,9 @@ public class AuthController(IAuthService authService) : BaseApiController
             ? result.Result
             : result.Error?.Code switch
             {
-                ResultErrorCode.IsEmailTaken => BadRequest(result.Error.Message),
-                ResultErrorCode.IsUsernameTaken => BadRequest(result.Error.Message),
+                AuthUserCreationErrorType.EmailAlreadyExists => BadRequest(result.Error.Message),
+                AuthUserCreationErrorType.UsernameAlreadyExists => BadRequest(result.Error.Message),
+                AuthUserCreationErrorType.AddRoleFailed => BadRequest(result.Error.Message),
                 _ => BadRequest("Account creation failed.")
             };
     }

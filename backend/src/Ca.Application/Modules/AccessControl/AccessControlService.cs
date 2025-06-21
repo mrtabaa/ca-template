@@ -1,35 +1,74 @@
+using Ca.Application.Modules.AccessControl.Commands;
+using Ca.Contracts.Responses.AccessControl;
 using Ca.Domain.Modules.AccessControl;
 using Ca.Domain.Modules.AccessControl.Aggregates;
 using Ca.Domain.Modules.AccessControl.Enums;
-using Ca.Domain.Modules.AccessControl.ValueObjects;
-using Ca.Shared.Configurations.Common.SeedSettings;
-using Microsoft.Extensions.Options;
+using Ca.Domain.Modules.AccessControl.Results;
+using Ca.Domain.Modules.Common.Exceptions;
+using Ca.Shared.Results;
 
 namespace Ca.Application.Modules.AccessControl;
 
 public class AccessControlService(
-    IAccessControlRepository accessControlRepository,
-    IOptions<SuperAdminSeedInfo> appAdminSeedInfo
+    IAccessControlRepository accessControlRepository
 ) : IAccessControlService
 {
-    /// <summary>
-    ///     Assign users' role and permissions.
-    /// </summary>
-    /// <param name="roleName"></param>
-    /// <param name="permissions"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public Task AssignRoleAndPermissionsAsync(string roleName, IEnumerable<Permission> permissions) =>
-        throw new NotImplementedException();
-
-    /// <summary>
-    ///     Assigns the SuperAdmin role and permissions.
-    /// </summary>
-    /// <param name="roleName"></param>
-    public async Task SeedSuperAdminRoleAndPermissionsAsync(string roleName)
+    public async Task<OperationResult<AccessRoleResponse>> UpsertRoleAsync(AccessRoleCommand command)
     {
-        var appRole = AppRole.CreateSuperAdmin(roleName, AccessPermissionType.AccessSuperAdminPanel);
+        IEnumerable<AccessPermissionType> desiredPermissions =
+            ConvertPermissionsStringToEnum(command.DesiredPermissions);
 
-        await accessControlRepository.CreateAppRoleAsync(appRole);
+        AccessRoleResult result = await accessControlRepository.GetAppRoleByNameAsync(command.RoleName);
+
+        if (result.AppRole is null)
+        {
+            var appRole = AppRole.Create(command.RoleName, desiredPermissions);
+            result = await accessControlRepository.CreateAppRoleAsync(appRole);
+        }
+        else
+        {
+            result.AppRole.ReplacePermissions(desiredPermissions);
+            result = await accessControlRepository.UpdatePermissionsAsync(result.AppRole);
+        }
+
+        return AccessControlMapper.MapRoleResultToRoleResponse(result);
+    }
+
+    /// <summary>
+    ///     Seed SuperAdmin role and permissions on app startup.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    public async Task<OperationResult<AccessRoleResponse>> SeedSuperAdminRoleAndPermissionsAsync(
+        AccessRoleCommand command
+    )
+    {
+        var appRole = AppRole.CreateSuperAdmin(command.RoleName, AccessPermissionType.AccessSuperAdminPanel);
+
+        AccessRoleResult result = await accessControlRepository.CreateAppRoleAsync(appRole);
+
+        return AccessControlMapper.MapRoleResultToRoleResponse(result);
+    }
+
+
+    /// <summary>
+    ///     Converts permissions string to permissions enum of AccessPermissionType
+    /// </summary>
+    /// <param name="permissionsStr"></param>
+    /// <returns></returns>
+    /// <exception cref="DomainException"></exception>
+    private IEnumerable<AccessPermissionType> ConvertPermissionsStringToEnum(IEnumerable<string> permissionsStr)
+    {
+        List<AccessPermissionType> permissionsEnum = [];
+        foreach (string newPermission in permissionsStr)
+        {
+            AccessPermissionType type = Enum.TryParse(newPermission, ignoreCase: true, out AccessPermissionType parsed)
+                ? parsed
+                : throw new DomainException($"Invalid permission: {newPermission}");
+
+            permissionsEnum.Add(type);
+        }
+
+        return permissionsEnum;
     }
 }

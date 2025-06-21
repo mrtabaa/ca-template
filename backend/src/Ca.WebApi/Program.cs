@@ -1,7 +1,15 @@
+using Ca.Application.Modules.AccessControl;
+using Ca.Application.Modules.AccessControl.Commands;
 using Ca.Application.Modules.Auth;
+using Ca.Application.Modules.Auth.Commands;
+using Ca.Contracts.Responses.AccessControl;
 using Ca.Contracts.Responses.Auth;
+using Ca.Domain.Modules.AccessControl.Enums;
+using Ca.Shared.Configurations.Common.SeedSettings;
 using Ca.Shared.Results;
 using Ca.WebApi;
+using Ca.WebApi.Modules.Auth;
+using Microsoft.Extensions.Options;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -25,13 +33,23 @@ if (app.Environment.IsDevelopment())
     );
 
     // Seed SuperAdmin
+    SuperAdminSeedInfo seedInfo = app.Services.GetRequiredService<IOptions<SuperAdminSeedInfo>>().Value;
+
+    RegisterSuperAdminCommand command = AuthRequestMapper.MapRegisterSuperAdminRequestToRegisterCommand(seedInfo);
+
     using IServiceScope scope = app.Services.CreateScope();
+
+    var accessControlService = scope.ServiceProvider.GetRequiredService<IAccessControlService>();
+    var myCommand = new AccessRoleCommand(seedInfo.RoleName, [AccessPermissionType.AccessSuperAdminPanel.ToString()]);
+    OperationResult<AccessRoleResponse> result = await accessControlService.SeedSuperAdminRoleAndPermissionsAsync(myCommand);
+    Console.WriteLine(result.IsSuccess ? "SuperAdmin role created successfully." : "SuperAdmin role creation failed.");
+
     var authService = scope.ServiceProvider.GetRequiredService<IAuthService>();
-    OperationResult<RegisterResponse> result = await authService.SeedSuperAdminAppUserAsync();
+    OperationResult<RegisterResponse> response = await authService.SeedSuperAdminAppUserAsync(command);
     Console.WriteLine(
-        result.IsSuccess
+        response.IsSuccess
             ? "SuperAdmin created successfully."
-            : $"SuperAdmin creation failed with error {result.Error?.Message}."
+            : $"SuperAdmin creation failed with error {response.Error?.Message}."
     );
 }
 

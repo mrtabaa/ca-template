@@ -7,5 +7,5 @@ namespace Ca.Application.Modules.Auth;
 public interface IAuthService
 {
     public Task<OperationResult<RegisterResponse>> CreateAsync(RegisterCommand command);
-    public Task<OperationResult<RegisterResponse>> SeedSuperAdminAppUserAsync();
+    public Task<OperationResult<RegisterResponse>> SeedSuperAdminAppUserAsync(RegisterSuperAdminCommand command);
 }

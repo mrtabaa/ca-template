@@ -5,5 +5,9 @@ namespace Ca.Domain.Modules.AccessControl;
 
 public interface IAccessControlRepository
 {
-    public Task<AccessRoleCreationResult> CreateAppRoleAsync(AppRole appRole);
+    public Task<AccessRoleResult> CreateAppRoleAsync(AppRole appRole);
+
+    public Task<AccessRoleResult> GetAppRoleByNameAsync(string roleName);
+
+    public Task<AccessRoleResult> UpdatePermissionsAsync(AppRole domainRole);
 }

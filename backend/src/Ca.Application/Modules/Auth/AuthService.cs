@@ -4,13 +4,11 @@ using Ca.Domain.Modules.AccessControl.Enums;
 using Ca.Domain.Modules.Auth;
 using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.Auth.Results;
-using Ca.Shared.Configurations.Common.SeedSettings;
 using Ca.Shared.Results;
-using Microsoft.Extensions.Options;
 
 namespace Ca.Application.Modules.Auth;
 
-public class AuthService(IAuthRepository authRepository, IOptions<SuperAdminSeedInfo> superAdminSeedInfo) : IAuthService
+public class AuthService(IAuthRepository authRepository) : IAuthService
 {
     public async Task<OperationResult<RegisterResponse>> CreateAsync(RegisterCommand command)
     {
@@ -23,13 +21,10 @@ public class AuthService(IAuthRepository authRepository, IOptions<SuperAdminSeed
         return AuthMapper.MapAppUserToRegisterResult(result);
     }
 
-    public async Task<OperationResult<RegisterResponse>> SeedSuperAdminAppUserAsync()
+    public async Task<OperationResult<RegisterResponse>> SeedSuperAdminAppUserAsync(RegisterSuperAdminCommand command)
     {
-        SuperAdminSeedInfo seedInfo = superAdminSeedInfo.Value;
-
         var appUser = AppUser.CreateSuperAdmin( // It guards from creating extra super admins
-            seedInfo.FirstName, seedInfo.LastName, seedInfo.Email, seedInfo.UserName, seedInfo.RoleName,
-            seedInfo.Password
+            command.FirstName, command.LastName, command.Email, command.UserName, command.RoleNameRaw, command.Password
         );
 
         AuthUserCreationResult result = await authRepository.SeedSuperAdminAppUserAsync(

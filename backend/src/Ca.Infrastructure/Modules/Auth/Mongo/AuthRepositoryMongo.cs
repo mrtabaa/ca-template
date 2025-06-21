@@ -16,18 +16,16 @@ public class AuthRepositoryMongo : IAuthRepository
     #region CRUD
 
     /// <summary>
-    ///     Create a new user.
+    ///     Create a new user with a default member role.
     /// </summary>
     /// <param name="appUser"></param>
     /// <param name="roleType"></param>
     /// <returns>AuthUserCreationResult</returns>
-    public async Task<AuthUserCreationResult> CreateAppUserAsync(
-        AppUser appUser, AccessRoleType roleType
-    ) =>
+    public async Task<AuthUserCreationResult> CreateAppUserAsync(AppUser appUser, AccessRoleType roleType) =>
         await ImplementCreateUserAppAsync(appUser, roleType);
 
     /// <summary>
-    ///     Seed SuperAdmin AppUser.
+    ///     Seed SuperAdmin AppUser with SuperAdmin role.
     /// </summary>
     /// <param name="appUser"></param>
     /// <param name="roleType"></param>
@@ -36,11 +34,11 @@ public class AuthRepositoryMongo : IAuthRepository
         await ImplementCreateUserAppAsync(appUser, roleType);
 
     /// <summary>
-    ///     The implementation of CreateAppUserAsync.
+    ///     The implementation of CreateAppUserAsync with a given role.
     /// </summary>
     /// <param name="appUser"></param>
     /// <param name="roleType"></param>
-    /// <returns></returns>
+    /// <returns>AuthUserCreationResult</returns>
     private async Task<AuthUserCreationResult> ImplementCreateUserAppAsync(AppUser appUser, AccessRoleType roleType)
     {
         // Check before creation for performance since username/email are checked in _userManager.CreateAppUserAsync 
@@ -48,59 +46,64 @@ public class AuthRepositoryMongo : IAuthRepository
         if (existingUser != null)
         {
             return new AuthUserCreationResult(
-                AppUser: null,
-                AuthUserCreationStatus.EmailAlreadyExists
+                Succeeded: false, AppUser: null, AuthUserCreationErrorType.EmailAlreadyExists, "Email already exists."
             );
         }
 
         AppUserMongo appUserMongo = CommonMapperMongo.MapAppUserToAppUserMongo(appUser);
 
-        IdentityResult userCreatedResult = await _userManager.CreateAsync(
-            appUserMongo, appUser.Password?.Value
-        );
+        IdentityResult userCreatedResult = await _userManager.CreateAsync(appUserMongo, appUser.Password?.Value);
         if (!userCreatedResult.Succeeded)
         {
             List<string> errors = userCreatedResult.Errors.Select(e => e.Description).ToList();
 
-            if (errors.Any(e => e.Contains(
-                        "is already taken", StringComparison.OrdinalIgnoreCase
-                    )
-                ))
+            if (errors.Any(e => e.Contains("is already taken", StringComparison.OrdinalIgnoreCase)))
             {
-                if (errors.Any(e => e.Contains("email", StringComparison.OrdinalIgnoreCase)
-                    ))
+                if (errors.Any(e => e.Contains("email", StringComparison.OrdinalIgnoreCase)))
                 {
                     return new AuthUserCreationResult(
-                        AppUser: null
+                        Succeeded: false, AppUser: null,
+                        AuthUserCreationErrorType.EmailAlreadyExists,
+                        "Email already exists."
                     );
                 }
 
-                if (errors.Any(e => e.Contains(
-                            "username", StringComparison.OrdinalIgnoreCase
-                        )
-                    ))
+                if (errors.Any(e => e.Contains("username", StringComparison.OrdinalIgnoreCase)))
+
                 {
                     return new AuthUserCreationResult(
+                        Succeeded: false,
                         AppUser: null,
-                        AuthUserCreationStatus.UsernameAlreadyExists
+                        AuthUserCreationErrorType.UsernameAlreadyExists,
+                        "Username already exists."
                     );
                 }
             }
 
-            return new AuthUserCreationResult(AppUser: null);
+            return new AuthUserCreationResult(
+                Succeeded: false, AppUser: null, AuthUserCreationErrorType.Unknown, "Failed with unknown error."
+            ); // Failed with other reasons
         }
 
-        IdentityResult roleResult = await _userManager.AddToRoleAsync(
-            appUserMongo, roleType.ToString()
-        );
-        if (!roleResult.Succeeded) // Failed to add the role. Delete appUser from DB
-        {
-            await _userManager.DeleteAsync(appUserMongo);
-            return new AuthUserCreationResult(AppUser: null);
-        }
+        bool addRoleFailed = await AddRoleToAppUserAsync(appUserMongo, roleType);
+        return addRoleFailed
+            ? new AuthUserCreationResult(
+                Succeeded: false, AppUser: null, AuthUserCreationErrorType.AddRoleFailed, "Add role failed."
+            )
+            : new AuthUserCreationResult(
+                Succeeded: true, appUser, AuthUserCreationErrorType.None, ErrorMessage: null
+            ); // Account created successfully.
+    }
 
-        // Account created successfully.
-        return new AuthUserCreationResult(appUser);
+    private async Task<bool> AddRoleToAppUserAsync(AppUserMongo appUserMongo, AccessRoleType roleType)
+    {
+        IdentityResult roleResult = await _userManager.AddToRoleAsync(appUserMongo, roleType.ToString());
+        if (roleResult.Succeeded)
+            return true;
+
+        // Failed to add the role. Delete appUser from DB
+        await _userManager.DeleteAsync(appUserMongo);
+        return false;
     }
 
     #endregion CRUD

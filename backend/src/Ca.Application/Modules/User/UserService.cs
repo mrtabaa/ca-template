@@ -12,7 +12,9 @@ public class UserService(IUserRepository userRepository) : IUserService
         AppUser? user = await userRepository.GetUserByIdAsync(command.IdStr, ct);
 
         if (user is null)
-            return new OperationResult(IsSuccess: false, new CustomError(ResultErrorCode.NetIdentityFailed, ""));
+            return new OperationResult(
+                IsSuccess: false, new CustomError(ResultErrorCode.NetIdentityFailed, ".Net error")
+            );
 
         user?.ChangeFirstName(command.NewName);
 

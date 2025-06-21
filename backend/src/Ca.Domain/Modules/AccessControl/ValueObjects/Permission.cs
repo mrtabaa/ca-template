@@ -13,7 +13,7 @@ public sealed record
     public bool IsAccessSuperAdminPanel => Value == AccessPermissionType.AccessSuperAdminPanel;
 
     /// <summary>
-    ///     // No validation to create SuperUser when seeding
+    ///     // Create Permission without validation when creating a SuperUser for seeding
     /// </summary>
     /// <param name="accessPermissionTypeRaw"></param>
     /// <returns></returns>
@@ -21,7 +21,7 @@ public sealed record
         => new(accessPermissionTypeRaw);
 
     /// <summary>
-    ///     With validation to create all permissions except SuperAdmin
+    ///     Create Permission with validation to create all permissions except SuperAdmin
     /// </summary>
     /// <param name="accessPermissionTypeRaw"></param>
     /// <returns></returns>

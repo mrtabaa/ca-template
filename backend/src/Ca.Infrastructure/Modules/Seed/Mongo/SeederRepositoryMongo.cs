@@ -25,7 +25,7 @@
 //         if (existingSuperAdmin != null)
 //         {
 //             logger.LogWarning("SuperAdmin exists already.");
-//             return new AuthUserCreationResult(AppUser: null, AuthUserCreationStatus.EmailAlreadyExists);
+//             return new AuthUserCreationResult(AppUser: null, ErrorType.EmailAlreadyExists);
 //         }
 //
 //         AppUserMongo appUserMongo = CommonMapperMongo.MapAppUserToAppUserMongo(appUser);
