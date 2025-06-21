@@ -85,13 +85,13 @@ public class AuthRepositoryMongo : IAuthRepository
             ); // Failed with other reasons
         }
 
-        bool addRoleFailed = await AddRoleToAppUserAsync(appUserMongo, roleType);
-        return addRoleFailed
+        bool addRoleSucceeded = await AddRoleToAppUserAsync(appUserMongo, roleType);
+        return addRoleSucceeded
             ? new AuthUserCreationResult(
-                Succeeded: false, AppUser: null, AuthUserCreationErrorType.AddRoleFailed, "Add role failed."
+                Succeeded: true, appUser, AuthUserCreationErrorType.None, ErrorMessage: null
             )
             : new AuthUserCreationResult(
-                Succeeded: true, appUser, AuthUserCreationErrorType.None, ErrorMessage: null
+                Succeeded: false, AppUser: null, AuthUserCreationErrorType.AddRoleFailed, "Add role failed."
             ); // Account created successfully.
     }
 
