@@ -11,6 +11,7 @@ namespace Ca.WebApi.Modules.Auth;
 
 public class AuthController(IAuthService authService) : BaseApiController
 {
+    [HttpPost("register")]
     public async Task<ActionResult<RegisterResponse>> Create(RegisterRequest request, CancellationToken ct)
     {
         if (request.Password != request.ConfirmPassword)
