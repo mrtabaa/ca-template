@@ -28,7 +28,7 @@ public class AuthController(IAuthService authService) : BaseApiController
                 AuthUserCreationErrorType.EmailAlreadyExists => BadRequest(result.Error.Message),
                 AuthUserCreationErrorType.UsernameAlreadyExists => BadRequest(result.Error.Message),
                 AuthUserCreationErrorType.AddRoleFailed => BadRequest(result.Error.Message),
-                _ => BadRequest("Account creation failed.")
+                _ => BadRequest(result.Error?.Message)
             };
     }
 }
