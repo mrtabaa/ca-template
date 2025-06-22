@@ -2,9 +2,9 @@ using Ca.Shared.Configurations.Mongo.Settings;
 
 namespace Ca.WebApi.Extensions;
 
-public static class ServiceExtensionsMongo
+internal static class ServiceExtensionsMongo
 {
-    public static IServiceCollection AddConfigsServiceMongo(this IServiceCollection services, IConfiguration config)
+    internal static IServiceCollection AddConfigsServiceMongo(this IServiceCollection services, IConfiguration config)
     {
         services
             .AddOptions<MyMongoDbSettings>()

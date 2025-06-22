@@ -1,8 +1,8 @@
 namespace Ca.WebApi.Extensions;
 
-public static class PolicyServiceExtensions
+internal static class PolicyServiceExtensions
 {
-    public static IServiceCollection AddPolicyService(this IServiceCollection services) =>
+    internal static IServiceCollection AddPolicyService(this IServiceCollection services) =>
         // Add authorization policies for roles
         // services.AddAuthorizationBuilder().AddPolicy(
         //     name: AppVariablesExtensions.RequiredAdminRole,

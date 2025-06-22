@@ -2,9 +2,9 @@ using Ca.Shared.Configurations.Common.SeedSettings;
 
 namespace Ca.WebApi.Extensions;
 
-public static class ApplicationServiceExtensions
+internal static class ApplicationServiceExtensions
 {
-    public static IServiceCollection AddAppAdminSeederConfigsService(
+    internal static IServiceCollection AddAppAdminSeederConfigsService(
         this IServiceCollection services, IConfiguration config
     )
     {
