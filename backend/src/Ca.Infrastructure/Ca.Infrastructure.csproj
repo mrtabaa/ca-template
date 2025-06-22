@@ -17,7 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Persistence\Mongo\ServiceExtensions\"/>
         <Folder Include="Persistence\Postgres\Extensions\"/>
     </ItemGroup>
 

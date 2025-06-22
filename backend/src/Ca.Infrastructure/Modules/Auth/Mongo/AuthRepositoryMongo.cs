@@ -81,7 +81,7 @@ public class AuthRepositoryMongo : IAuthRepository
             }
 
             return new AuthUserCreationResult(
-                Succeeded: false, AppUser: null, AuthUserCreationErrorType.Unknown, "Failed with unknown error."
+                Succeeded: false, AppUser: null, AuthUserCreationErrorType.Unknown, errors[index: 0]
             ); // Failed with other reasons
         }
 
@@ -130,3 +130,13 @@ public class AuthRepositoryMongo : IAuthRepository
 
     #endregion
 }
+
+/*
+Postman
+=> Request(Contracts) => Controller (WebApi) - Mapper(WebApi)  request > command(Application)
+=> Service(Application) => Entity/Validate(Domain) => Service(Application)
+=> Repository(Infra) - Mapper domainEntity > mongoModel => Database => Repository(Infra) - Mapper mongoModel > domainResult
+=> Service(Application) - Mapper domainResult > Response(Contracts) - OperationResult<Response>
+=> Controller(WebApi) => Response(Contracts)
+=> Postman
+*/
