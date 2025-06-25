@@ -12,7 +12,7 @@ public class AuthService(IAuthRepository authRepository) : IAuthService
 {
     public async Task<OperationResult<RegisterResponse>> CreateAsync(RegisterCommand command)
     {
-        var appUser = AppUser.Create( // Aggregate 
+        AppUser appUser = AppUser.Create( // Aggregate 
             command.FirstName, command.LastName, command.Email, command.UserName, command.Password
         );
 
