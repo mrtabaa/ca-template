@@ -12,7 +12,7 @@ public class AppUser
     {
     }
 
-    public Name Name { get; private set; }
+    public Name FirstName { get; private set; }
     public Name LastName { get; private set; }
     public Email Email { get; private set; }
     public Name UserName { get; private set; }
@@ -32,7 +32,7 @@ public class AppUser
     }
 
     public static AppUser Create(
-        string firstNameRaw, string lastNameRaw, string emailRaw, string userNameRaw, string passwordRaw
+        string? firstNameRaw, string? lastNameRaw, string? emailRaw, string? userNameRaw, string? passwordRaw
     )
     {
         var firstName = Name.Create(firstNameRaw); // value object handles validation
@@ -40,10 +40,10 @@ public class AppUser
         var email = Email.Create(emailRaw);
         var userName = Name.Create(userNameRaw);
         var password = Password.Create(passwordRaw);
-
+        
         return new AppUser
         {
-            Name = firstName, // Use of ValueObject
+            FirstName = firstName, // Use of ValueObject
             LastName = lastName,
             Email = email,
             UserName = userName,
@@ -54,7 +54,7 @@ public class AppUser
     public static AppUser Rehydrate(string firstNameRaw, string lastNameRaw, string emailRaw, string userNameRaw) =>
         new()
         {
-            Name = Name.Create(firstNameRaw),
+            FirstName = Name.Create(firstNameRaw),
             LastName = Name.Create(lastNameRaw),
             Email = Email.Create(emailRaw),
             UserName = Name.Create(emailRaw)
@@ -62,7 +62,7 @@ public class AppUser
 
     public void ChangeFirstName(string? newFirstName)
     {
-        Name = Name.Create(newFirstName);
+        FirstName = Name.Create(newFirstName);
     }
 
     public void ChangeLastName(string? newLastName)

@@ -83,7 +83,7 @@
 //         AppRoleMongo role = await roleManager.FindByNameAsync(roleName);
 //         if (role is null)
 //         {
-//             role = new AppRoleMongo { Name = roleName };
+//             role = new AppRoleMongo { FirstName = roleName };
 //             result = await roleManager.CreateAsync(role);
 //
 //             if (!result.Succeeded)

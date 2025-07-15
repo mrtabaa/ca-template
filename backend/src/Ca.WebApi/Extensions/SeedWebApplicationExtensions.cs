@@ -1,7 +1,7 @@
 using Ca.Application.Modules.AccessControl;
 using Ca.Application.Modules.AccessControl.Commands;
-using Ca.Application.Modules.Auth;
 using Ca.Application.Modules.Auth.Commands;
+using Ca.Application.Modules.Auth.Interfaces;
 using Ca.Contracts.Responses.AccessControl;
 using Ca.Contracts.Responses.Auth;
 using Ca.Domain.Modules.AccessControl.Enums;
@@ -18,7 +18,7 @@ internal static class SeedWebApplicationExtensions
     {
         using IServiceScope scope = app.Services.CreateScope();
         SuperAdminSeedInfo superAdminSeedInfo = app.Services.GetRequiredService<IOptions<SuperAdminSeedInfo>>().Value;
-        
+
         await CreateSuperAdminRole(scope, superAdminSeedInfo);
         await CreateSuperAdmin(scope, superAdminSeedInfo);
         await CreateClientRole(scope);
