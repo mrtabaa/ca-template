@@ -7,15 +7,20 @@ namespace Ca.Domain.Modules.Auth.ValueObjects;
 
 public sealed class Name : ValueObject
 {
-    private Name(string value) => Value = value;
+    public Name()
+    {
+    }
 
-    public string Value { get; }
+    public Name(string value) => Value = value;
+    // {
+    //     Value = value;
+    // }
+
+    public string Value { get; } // Read-only
 
     public static Name Create(string? nameRaw)
     {
-        string? validationError = nameRaw.ValidateValue(
-            nameof(nameRaw), CustomLengths.NameMin, CustomLengths.NameMax
-        );
+        string? validationError = nameRaw.ValidateValue(nameof(nameRaw), SharedLengths.NameMin, SharedLengths.NameMax);
 
         if (validationError is not null)
             throw new DomainException(validationError);

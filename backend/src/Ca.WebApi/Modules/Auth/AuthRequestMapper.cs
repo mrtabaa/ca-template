@@ -6,15 +6,6 @@ namespace Ca.WebApi.Modules.Auth;
 
 internal static class AuthRequestMapper
 {
-    internal static RegisterCommand MapRegisterRequestToRegisterCommand(RegisterRequest request) =>
-        new(
-            request.FirstName,
-            request.LastName,
-            request.Email,
-            request.UserName,
-            request.Password
-        );
-
     internal static RegisterSuperAdminCommand
         MapRegisterSuperAdminRequestToRegisterCommand(SuperAdminSeedInfo request) =>
         new(
@@ -23,6 +14,15 @@ internal static class AuthRequestMapper
             request.Email,
             request.UserName,
             request.RoleName,
+            request.Password
+        );
+
+    internal static RegisterCommand MapRegisterRequestToRegisterCommand(RegisterRequest request) =>
+        new(
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.UserName,
             request.Password
         );
 

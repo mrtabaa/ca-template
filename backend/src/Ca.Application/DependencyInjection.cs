@@ -1,5 +1,6 @@
 using Ca.Application.Modules.AccessControl;
 using Ca.Application.Modules.Auth;
+using Ca.Application.Modules.Auth.Interfaces;
 using Ca.Application.Modules.User;
 using Microsoft.Extensions.DependencyInjection;
 
