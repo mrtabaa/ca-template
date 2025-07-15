@@ -3,6 +3,7 @@ using Ca.Domain.Modules.Auth;
 using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.Auth.Enums;
 using Ca.Domain.Modules.Auth.Results;
+using Ca.Domain.Modules.Auth.ValueObjects;
 using Ca.Infrastructure.Modules.Auth.Mongo.Models;
 using Ca.Infrastructure.Modules.Common.Mongo;
 using Ca.Shared.Configurations.Mongo.Settings;
@@ -16,6 +17,15 @@ public class AuthRepositoryMongo : IAuthRepository
     #region CRUD
 
     /// <summary>
+    ///     Seed SuperAdmin AppUser with SuperAdmin role.
+    /// </summary>
+    /// <param name="appUser"></param>
+    /// <param name="roleType"></param>
+    /// <returns>AuthUserCreationResult</returns>
+    public async Task<AuthUserCreationResult> SeedSuperAdminAppUserAsync(AppUser appUser, AccessRoleType roleType) =>
+        await ImplementCreateUserAppAsync(appUser, roleType);
+
+    /// <summary>
     ///     Create a new user with a default member role.
     /// </summary>
     /// <param name="appUser"></param>
@@ -24,14 +34,9 @@ public class AuthRepositoryMongo : IAuthRepository
     public async Task<AuthUserCreationResult> CreateAppUserAsync(AppUser appUser, AccessRoleType roleType) =>
         await ImplementCreateUserAppAsync(appUser, roleType);
 
-    /// <summary>
-    ///     Seed SuperAdmin AppUser with SuperAdmin role.
-    /// </summary>
-    /// <param name="appUser"></param>
-    /// <param name="roleType"></param>
-    /// <returns>AuthUserCreationResult</returns>
-    public async Task<AuthUserCreationResult> SeedSuperAdminAppUserAsync(AppUser appUser, AccessRoleType roleType) =>
-        await ImplementCreateUserAppAsync(appUser, roleType);
+    public Task<LoginResult> LoginByUserNameAsync(Login login) => throw new NotImplementedException();
+
+    public Task<LoginResult> LoginByEmailAsync(Login login) => throw new NotImplementedException();
 
     /// <summary>
     ///     The implementation of CreateAppUserAsync with a given role.
@@ -75,7 +80,7 @@ public class AuthRepositoryMongo : IAuthRepository
                         Succeeded: false,
                         AppUser: null,
                         AuthUserCreationErrorType.UsernameAlreadyExists,
-                        "Username already exists."
+                        "UserName already exists."
                     );
                 }
             }

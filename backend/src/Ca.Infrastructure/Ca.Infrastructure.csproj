@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
+        <ProjectReference Include="..\Ca.Application\Ca.Application.csproj"/>
         <ProjectReference Include="..\Ca.Domain\Ca.Domain.csproj"/>
         <ProjectReference Include="..\Ca.Shared\Ca.Shared.csproj"/>
     </ItemGroup>
@@ -17,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Modules\Auth\Mongo\Services\"/>
         <Folder Include="Persistence\Postgres\Extensions\"/>
     </ItemGroup>
 

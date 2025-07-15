@@ -10,9 +10,9 @@ internal static class AuthMapper
     internal static OperationResult<RegisterResponse> MapAppUserToRegisterResult(AuthUserCreationResult result) =>
         result.Succeeded && result.AppUser is not null
             ? new OperationResult<RegisterResponse>(
-                result.Succeeded,
+                IsSuccess: true,
                 new RegisterResponse(
-                    result.AppUser.Name.Value,
+                    result.AppUser.FirstName.Value,
                     result.AppUser.LastName.Value,
                     result.AppUser.Email.Value,
                     result.AppUser.UserName.Value
@@ -36,6 +36,32 @@ internal static class AuthMapper
                 _ => new OperationResult<RegisterResponse>(
                     IsSuccess: false,
                     Error: new CustomError(AuthUserCreationErrorType.Unknown, result.ErrorMessage)
+                )
+            };
+
+    internal static OperationResult<LoginResponse> MapAppUserToLoginResult(LoginResult result) =>
+        result.Succeeded
+            ? new OperationResult<LoginResponse>(
+                IsSuccess: true,
+                new LoginResponse(
+                    IsRecaptchaTokenInvalid: false,
+                    IsWrongCreds: false,
+                    Email: result.AppUser.Email.Value,
+                    UserName: result.AppUser.UserName.Value,
+                    FirstName: result.AppUser.FirstName.Value,
+                    LastName: result.AppUser.LastName.Value
+                ),
+                Error: null
+            )
+            : result.ErrorType switch
+            {
+                AuthLoginErrorType.WrongCredentials => new OperationResult<LoginResponse>(
+                    IsSuccess: false,
+                    Error: new CustomError(AuthLoginErrorType.WrongCredentials, result.ErrorMessage)
+                ),
+                _ => new OperationResult<LoginResponse>(
+                    IsSuccess: false,
+                    Error: new CustomError(AuthLoginErrorType.Unknown, result.ErrorMessage)
                 )
             };
 }

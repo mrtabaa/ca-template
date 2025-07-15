@@ -25,4 +25,11 @@ internal static class AuthRequestMapper
             request.RoleName,
             request.Password
         );
+
+    internal static LoginCommand MapLoginRequestToLoginCommand(LoginRequest request, SessionMetadataDto metadata) =>
+        new(
+            request.Credential,
+            request.Password,
+            metadata
+        );
 }

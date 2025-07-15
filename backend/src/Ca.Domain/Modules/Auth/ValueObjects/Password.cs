@@ -1,3 +1,5 @@
+using Ca.Domain.Modules.Common.Exceptions;
+using Ca.Domain.Modules.Common.Validations;
 using Ca.Domain.Shared;
 
 namespace Ca.Domain.Modules.Auth.ValueObjects;
@@ -8,16 +10,16 @@ public sealed class Password
 
     public string Value { get; }
 
-    public static Password Create(string value)
+    public static Password Create(string? passwordRaw)
     {
-        if (
-            string.IsNullOrEmpty(value)
-            || value.Length < CustomLengths.PasswordMin
-            || value.Length > CustomLengths.PasswordMax
-        )
-            throw new Exception("Password value must be between 8 and 30 characters");
+        string? validationError = passwordRaw.ValidateValue(
+            nameof(passwordRaw), SharedLengths.PasswordMin, SharedLengths.PasswordMax, pattern: null
+        );
 
-        return new Password(value);
+        if (validationError is not null)
+            throw new DomainException(validationError);
+
+        return new Password(passwordRaw!);
     }
 
     //overrides the default ToString() behavior to hide the actual password value when the object is printed or logged.

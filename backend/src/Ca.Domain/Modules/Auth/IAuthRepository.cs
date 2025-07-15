@@ -1,13 +1,17 @@
 using Ca.Domain.Modules.AccessControl.Enums;
 using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.Auth.Results;
+using Ca.Domain.Modules.Auth.ValueObjects;
 
 namespace Ca.Domain.Modules.Auth;
 
 public interface IAuthRepository
 {
-    public Task<AuthUserCreationResult> CreateAppUserAsync(AppUser appUser, AccessRoleType roleType);
     public Task<AuthUserCreationResult> SeedSuperAdminAppUserAsync(AppUser appUser, AccessRoleType roleType);
+
+    public Task<AuthUserCreationResult> CreateAppUserAsync(AppUser appUser, AccessRoleType roleType);
+    public Task<LoginResult> LoginByUserNameAsync(Login login);
+    public Task<LoginResult> LoginByEmailAsync(Login login);
 
     // public Task<OperationResult<LoginResult>> VerifyAsync(
     //     VerifyDto verifyDto, SessionMetadata sessionMetadata, CancellationToken cancellationToken
@@ -21,11 +25,11 @@ public interface IAuthRepository
     //     LoginDto loginDto, SessionMetadata sessionMetadata, CancellationToken cancellationToken
     // );
     //
-    // public Task<OperationResult<TokenDto>> RefreshTokensAsync(
+    // public Task<OperationResult<TokenSet>> RefreshTokensAsync(
     //     RefreshTokenRequest refreshTokenRequest, CancellationToken cancellationToken
     // );
     //
-    // public Task<OperationResult<LoggedInDto>> ReloadLoggedInUserAsync(
+    // public Task<OperationResult<LoggedInSession>> ReloadLoggedInUserAsync(
     //     string userIdHashed, CancellationToken cancellationToken
     // );
     //
