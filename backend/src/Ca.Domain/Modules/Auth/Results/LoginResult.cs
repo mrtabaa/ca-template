@@ -5,7 +5,7 @@ namespace Ca.Domain.Modules.Auth.Results;
 
 public record LoginResult(
     bool Succeeded,
-    AppUser AppUser,
+    AppUser? AppUser,
     AuthLoginErrorType ErrorType,
     string? ErrorMessage
 );

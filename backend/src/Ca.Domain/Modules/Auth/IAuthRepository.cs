@@ -7,11 +7,10 @@ namespace Ca.Domain.Modules.Auth;
 
 public interface IAuthRepository
 {
-    public Task<AuthUserCreationResult> SeedSuperAdminAppUserAsync(AppUser appUser, AccessRoleType roleType);
+    public Task<RegisterResult> SeedSuperAdminAppUserAsync(AppUser appUser, AccessRoleType roleType);
 
-    public Task<AuthUserCreationResult> CreateAppUserAsync(AppUser appUser, AccessRoleType roleType);
-    public Task<LoginResult> LoginByUserNameAsync(Login login);
-    public Task<LoginResult> LoginByEmailAsync(Login login);
+    public Task<RegisterResult> CreateAppUserAsync(AppUser appUser, AccessRoleType roleType);
+    public Task<LoginResult> LoginAsync(Login login);
 
     // public Task<OperationResult<LoginResult>> VerifyAsync(
     //     VerifyDto verifyDto, SessionMetadata sessionMetadata, CancellationToken cancellationToken

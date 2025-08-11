@@ -8,8 +8,9 @@ namespace Ca.Domain.Modules.Auth.ValueObjects;
 public sealed class Email : ValueObject
 {
     private Email(string value) => Value = value;
-    
+
     public string Value { get; }
+
 
     public static Email Create(string? emailRaw)
     {

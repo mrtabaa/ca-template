@@ -7,7 +7,7 @@ namespace Ca.Application.Modules.Auth;
 
 internal static class AuthMapper
 {
-    internal static OperationResult<RegisterResponse> MapAppUserToRegisterResult(AuthUserCreationResult result) =>
+    internal static OperationResult<RegisterResponse> MapRegisterResultToOperationResult(RegisterResult result) =>
         result.Succeeded && result.AppUser is not null
             ? new OperationResult<RegisterResponse>(
                 IsSuccess: true,

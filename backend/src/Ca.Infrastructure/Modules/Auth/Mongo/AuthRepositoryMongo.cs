@@ -22,19 +22,98 @@ public class AuthRepositoryMongo : IAuthRepository
     /// <param name="appUser"></param>
     /// <param name="roleType"></param>
     /// <returns>AuthUserCreationResult</returns>
-    public async Task<AuthUserCreationResult> SeedSuperAdminAppUserAsync(AppUser appUser, AccessRoleType roleType) =>
+    public async Task<RegisterResult> SeedSuperAdminAppUserAsync(AppUser appUser, AccessRoleType roleType) =>
         await ImplementCreateUserAppAsync(appUser, roleType);
 
     /// <summary>
-    ///     Create a new user with a default member role.
+    ///     Create a new user with a default client role.
     /// </summary>
     /// <param name="appUser"></param>
     /// <param name="roleType"></param>
     /// <returns>AuthUserCreationResult</returns>
-    public async Task<AuthUserCreationResult> CreateAppUserAsync(AppUser appUser, AccessRoleType roleType) =>
+    public async Task<RegisterResult> CreateAppUserAsync(AppUser appUser, AccessRoleType roleType) =>
         await ImplementCreateUserAppAsync(appUser, roleType);
 
-    public Task<LoginResult> LoginByUserNameAsync(Login login) => throw new NotImplementedException();
+    public async Task<LoginResult> LoginAsync(Login login)
+    {
+        // if (!await ValidateRecaptcha(userInput.RecaptchaToken, cancellationToken))
+        // {
+        //     return new OperationResult<LoginResult>(
+        //         false,
+        //         Error: new CustomError(
+        //             ErrorCode.IsRecaptchaTokenInvalid,
+        //             RecaptchaErrorMessage
+        //         )
+        //     );
+        // }
+
+        AppUserMongo? appUserMongo = await CheckCredentials(login);
+        if (appUserMongo is null)
+        {
+            return new LoginResult(
+                Succeeded: false,
+                AppUser: null,
+                AuthLoginErrorType.WrongCredentials,
+                "Wrong username or password"
+            );
+        }
+
+        // if (!await _userManager.IsEmailConfirmedAsync(appUserMongo))
+        // {
+        //     if (!await SendVerificationCode(appUserMongo, cancellationToken))
+        //         throw new ArgumentException(nameof(appUserMongo.UserName) + ": Failed to email the verification code.");
+        //
+        //     return new OperationResult<LoginResult>(
+        //         false,
+        //         new LoginResult(
+        //             new LoggedInDto(Email: appUserMongo.Email?.ToLower(), IsEmailNotConfirmed: true)
+        //         ),
+        //         new CustomError(
+        //             ErrorCode.IsEmailNotConfirmed
+        //         )
+        //     );
+        // }
+
+        // RefreshTokenRequest refreshTokenRequest = new()
+        // {
+        //     JtiValue = Guid.CreateVersion7().ToString(),
+        //     SessionMetadata = sessionMetadata
+        // };
+        //
+        // return new OperationResult<LoginResult>(
+        //     true,
+        //     new LoginResult(
+        //         Mappers.ConvertAppUserToLoggedInDto(
+        //             appUserMongo, await _userManager.GetRolesAsync(appUserMongo), GetMainPhoto(appUserMongo)
+        //         ),
+        //         await _tokenService.GenerateTokensAsync(refreshTokenRequest, appUserMongo, cancellationToken)
+        //     ),
+        //     null
+        // );
+
+        return new LoginResult(
+            Succeeded: true,
+            CommonMapperMongo.MapMongoAppUserToAppUser(appUserMongo),
+            AuthLoginErrorType.None,
+            ErrorMessage: null
+        );
+        ;
+    }
+
+    private async Task<AppUserMongo?> CheckCredentials(Login login)
+    {
+        AppUserMongo? appUserMongo = login.IsEmail
+            ? await _userManager.FindByEmailAsync(login.Email?.Value)
+            : await _userManager.FindByNameAsync(login.UserName?.Value);
+
+        if (appUserMongo is null)
+            return null;
+
+        if (!await _userManager.CheckPasswordAsync(appUserMongo, login.Password.Value))
+            return null;
+
+        return appUserMongo;
+    }
 
     public Task<LoginResult> LoginByEmailAsync(Login login) => throw new NotImplementedException();
 
@@ -43,30 +122,30 @@ public class AuthRepositoryMongo : IAuthRepository
     /// </summary>
     /// <param name="appUser"></param>
     /// <param name="roleType"></param>
-    /// <returns>AuthUserCreationResult</returns>
-    private async Task<AuthUserCreationResult> ImplementCreateUserAppAsync(AppUser appUser, AccessRoleType roleType)
+    /// <returns>RegisterResult</returns>
+    private async Task<RegisterResult> ImplementCreateUserAppAsync(AppUser appUser, AccessRoleType roleType)
     {
         // Check before creation for performance since username/email are checked in _userManager.CreateAppUserAsync 
         AppUserMongo? existingUser = await _userManager.FindByEmailAsync(appUser.Email?.Value);
         if (existingUser != null)
         {
-            return new AuthUserCreationResult(
+            return new RegisterResult(
                 Succeeded: false, AppUser: null, AuthUserCreationErrorType.EmailAlreadyExists, "Email already exists."
             );
         }
 
         AppUserMongo appUserMongo = CommonMapperMongo.MapAppUserToAppUserMongo(appUser);
 
-        IdentityResult userCreatedResult = await _userManager.CreateAsync(appUserMongo, appUser.Password?.Value);
-        if (!userCreatedResult.Succeeded)
+        IdentityResult identityResult = await _userManager.CreateAsync(appUserMongo, appUser.Password?.Value);
+        if (!identityResult.Succeeded)
         {
-            List<string> errors = userCreatedResult.Errors.Select(e => e.Description).ToList();
+            List<string> errors = identityResult.Errors.Select(e => e.Description).ToList();
 
             if (errors.Any(e => e.Contains("is already taken", StringComparison.OrdinalIgnoreCase)))
             {
                 if (errors.Any(e => e.Contains("email", StringComparison.OrdinalIgnoreCase)))
                 {
-                    return new AuthUserCreationResult(
+                    return new RegisterResult(
                         Succeeded: false, AppUser: null,
                         AuthUserCreationErrorType.EmailAlreadyExists,
                         "Email already exists."
@@ -76,7 +155,7 @@ public class AuthRepositoryMongo : IAuthRepository
                 if (errors.Any(e => e.Contains("username", StringComparison.OrdinalIgnoreCase)))
 
                 {
-                    return new AuthUserCreationResult(
+                    return new RegisterResult(
                         Succeeded: false,
                         AppUser: null,
                         AuthUserCreationErrorType.UsernameAlreadyExists,
@@ -85,19 +164,19 @@ public class AuthRepositoryMongo : IAuthRepository
                 }
             }
 
-            return new AuthUserCreationResult(
+            return new RegisterResult(
                 Succeeded: false, AppUser: null, AuthUserCreationErrorType.Unknown, errors[index: 0]
             ); // Failed with other reasons
         }
 
         bool addRoleSucceeded = await AddRoleToAppUserAsync(appUserMongo, roleType);
         return addRoleSucceeded
-            ? new AuthUserCreationResult(
+            ? new RegisterResult( // Account created successfully.
                 Succeeded: true, appUser, AuthUserCreationErrorType.None, ErrorMessage: null
             )
-            : new AuthUserCreationResult(
+            : new RegisterResult(
                 Succeeded: false, AppUser: null, AuthUserCreationErrorType.AddRoleFailed, "Add role failed."
-            ); // Account created successfully.
+            );
     }
 
     private async Task<bool> AddRoleToAppUserAsync(AppUserMongo appUserMongo, AccessRoleType roleType)

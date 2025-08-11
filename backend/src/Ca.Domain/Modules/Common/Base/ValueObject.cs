@@ -21,17 +21,10 @@ public abstract class ValueObject
 
     public override int GetHashCode()
     {
-        return GetEqualityComponents()
-            .Aggregate(1, (current, obj) => current * 23 + (obj?.GetHashCode() ?? 0));
+        return GetEqualityComponents().Aggregate(seed: 1, (current, obj) => current * 23 + (obj?.GetHashCode() ?? 0));
     }
 
-    public static bool operator ==(ValueObject? left, ValueObject? right)
-    {
-        return Equals(left, right);
-    }
+    public static bool operator ==(ValueObject? left, ValueObject? right) => Equals(left, right);
 
-    public static bool operator !=(ValueObject? left, ValueObject? right)
-    {
-        return !Equals(left, right);
-    }
+    public static bool operator !=(ValueObject? left, ValueObject? right) => !Equals(left, right);
 }

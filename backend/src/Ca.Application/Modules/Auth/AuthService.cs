@@ -18,11 +18,11 @@ public class AuthService(IAuthRepository authRepository) : IAuthService
             command.FirstName, command.LastName, command.Email, command.UserName, command.RoleNameRaw, command.Password
         );
 
-        AuthUserCreationResult result = await authRepository.SeedSuperAdminAppUserAsync(
+        RegisterResult result = await authRepository.SeedSuperAdminAppUserAsync(
             appUser, AccessRoleType.SuperAdmin
         );
 
-        return AuthMapper.MapAppUserToRegisterResult(result);
+        return AuthMapper.MapRegisterResultToOperationResult(result);
     }
 
     public async Task<OperationResult<RegisterResponse>> CreateAsync(RegisterCommand command)
@@ -31,9 +31,9 @@ public class AuthService(IAuthRepository authRepository) : IAuthService
             command.FirstName, command.LastName, command.Email, command.UserName, command.Password
         );
 
-        AuthUserCreationResult result = await authRepository.CreateAppUserAsync(appUser, AccessRoleType.Client);
+        RegisterResult result = await authRepository.CreateAppUserAsync(appUser, AccessRoleType.Client);
 
-        return AuthMapper.MapAppUserToRegisterResult(result);
+        return AuthMapper.MapRegisterResultToOperationResult(result);
     }
 
     public async Task<OperationResult<LoginResponse>> LoginAsync(LoginCommand command)
@@ -45,9 +45,7 @@ public class AuthService(IAuthRepository authRepository) : IAuthService
             command.SessionMetadata.IpAddress, command.SessionMetadata.Location
         );
 
-        LoginResult loginResult = login.IsEmail
-            ? loginResult = await authRepository.LoginByEmailAsync(login)
-            : loginResult = await authRepository.LoginByUserNameAsync(login);
+        LoginResult loginResult = await authRepository.LoginAsync(login);
 
         // if(loginResult.Suceeded)
         //     SessionMetadata
