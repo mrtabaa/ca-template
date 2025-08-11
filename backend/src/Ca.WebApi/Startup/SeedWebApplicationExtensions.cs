@@ -10,7 +10,7 @@ using Ca.Shared.Results;
 using Ca.WebApi.Modules.Auth;
 using Microsoft.Extensions.Options;
 
-namespace Ca.WebApi.Extensions;
+namespace Ca.WebApi.Startup;
 
 internal static class SeedWebApplicationExtensions
 {
