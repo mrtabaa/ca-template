@@ -17,7 +17,7 @@ public static class ServiceExtensionsMongo
                                         ?? throw new InvalidOperationException("MongoDB ConnectionString is missing.");
 
             settings.DatabaseName = config["MyMongoDbSettings:DatabaseName"]
-                                    ?? throw new InvalidOperationException("MongoDB DatabaseName is missing.");;
+                                    ?? throw new InvalidOperationException("MongoDB DatabaseName is missing.");
         });
         
         // 2. Register as IMyMongoDbSettings

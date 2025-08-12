@@ -22,11 +22,11 @@ public static class AuthMapper
             {
                 AuthCreationResult.EmailAlreadyExists => new OperationResult<RegisterResponse>(
                     false,
-                    Error: new CustomError(ResultErrorCode.IsEmailAlreadyConfirmed, "User already exists.")
+                    Error: new CustomError(ResultErrorCode.IsEmailTaken, "User already exists.")
                 ),
                 _ => new OperationResult<RegisterResponse>(
                     false,
-                    Error: new CustomError(ResultErrorCode.IsEmailAlreadyConfirmed, "Creation failed.")
+                    Error: new CustomError(ResultErrorCode.NetIdentityFailed, "Creation failed.")
                 )
             };
 }
