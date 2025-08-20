@@ -7,6 +7,8 @@ public static class InfrastructureServices
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
+        // MongoDB
+        services.AddConfigsServiceMongo(config);
         services.AddServiceMongo();
         services.AddIdentityServiceMongo();
         services.AddRepositoriesMongo();
