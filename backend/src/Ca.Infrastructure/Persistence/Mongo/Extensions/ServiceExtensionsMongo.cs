@@ -1,13 +1,27 @@
-using Ca.Shared.Configurations.Mongo.Settings;
+using Ca.Infrastructure.Persistence.Mongo.Settings;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Ca.Infrastructure.Persistence.Mongo.Extensions;
 
-public static class ServiceExtensionsMongo
+internal static class ServiceExtensionsMongo
 {
-    public static IServiceCollection AddServiceMongo(this IServiceCollection services)
+    internal static IServiceCollection AddConfigsServiceMongo(
+        this IServiceCollection services, IConfiguration config
+    )
+    {
+        services.AddOptions<MyMongoDbSettings>().Bind(config.GetSection(nameof(MyMongoDbSettings))).Validate(
+            settings => !string.IsNullOrWhiteSpace(settings.ConnectionString) &&
+                        !string.IsNullOrWhiteSpace(settings.DatabaseName),
+            "MongoDB ConnectionString and DatabaseName are required."
+        ).ValidateOnStart(); // Fail fast at startup
+
+        return services;
+    }
+
+    internal static IServiceCollection AddServiceMongo(this IServiceCollection services)
     {
         // get values
         services.AddSingleton<IMyMongoDbSettings>(serviceProvider =>

@@ -1,5 +1,4 @@
 using Ca.Shared.Pagination;
-using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
 namespace Ca.Infrastructure.Modules.Common.Mongo;
@@ -16,7 +15,7 @@ public static class PaginationExtensionMongo
     /// <param name="cancellationToken"></param>
     /// <returns T="object with its prop values">PageList</returns>
     public static async Task<PagedList<T>> CreatePagedListAsync<T>(
-        this IMongoQueryable<T> query, int pageNumber, int pageSize, CancellationToken cancellationToken
+        this IQueryable<T> query, int pageNumber, int pageSize, CancellationToken cancellationToken
     )
     {
         int count = await query.CountAsync(cancellationToken);

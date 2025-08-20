@@ -1,4 +1,4 @@
-namespace Ca.Shared.Configurations.Mongo.Settings;
+namespace Ca.Infrastructure.Persistence.Mongo.Settings;
 
 public interface IMyMongoDbSettings
 {

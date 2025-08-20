@@ -2,7 +2,7 @@ using Ca.Domain.Modules.Auth.Aggregates;
 using Ca.Domain.Modules.User;
 using Ca.Infrastructure.Modules.Auth.Mongo.Models;
 using Ca.Infrastructure.Modules.Common.Mongo;
-using Ca.Shared.Configurations.Mongo.Settings;
+using Ca.Infrastructure.Persistence.Mongo.Settings;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson;
 using MongoDB.Driver;

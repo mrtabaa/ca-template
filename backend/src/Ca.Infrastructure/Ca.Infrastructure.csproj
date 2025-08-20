@@ -18,9 +18,10 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
+
+        <!-- MongoDB driver & Identity -->
         <PackageReference Include="MongoDB.Driver"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity"/>
-        <PackageReference Include="AspNetCore.Identity.MongoDbCore"/>
+        <PackageReference Include="MadEyeMatt.AspNetCore.Identity.MongoDB"/>
     </ItemGroup>
 
     <ItemGroup>
