@@ -1,39 +1,40 @@
 <Project>
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-  </PropertyGroup>
-  <ItemGroup>
-    <!--        ALL -->
-    <PackageVersion Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" />
-    <!--        Application, Infrastructure, WebApi-->
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
-    <!--        Infrastructure-->
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageVersion>
-    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-    <PackageVersion Include="MongoDB.Driver" Version="2.30.0" />
-    <PackageVersion Include="AspNetCore.Identity.MongoDbCore" Version="6.0.0" />
-    <!--        WebApi-->
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
-    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.2" />
-    <!--        Tests-->
-    <PackageVersion Include="coverlet.collector" Version="6.0.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageVersion>
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.0" />
-    <PackageVersion Include="UAParser.Core" Version="4.0.5" />
-    <PackageVersion Include="xunit" Version="2.9.3" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageVersion>
-  </ItemGroup>
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+    <ItemGroup>
+        <!-- Core & config -->
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.8"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.8"/>
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8"/>
+        <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.8"/>
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.8"/>
+        <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.8"/>
+        
+        <!-- EFCore & Postgres & health check -->
+        <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.8"/>
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8"/>
+        <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4"/>
+        <PackageVersion Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0"/>
+        
+        <!-- MongoDB driver & Identity -->
+        <PackageVersion Include="MongoDB.Driver" Version="3.4.3"/>
+        <PackageVersion Include="MadEyeMatt.AspNetCore.Identity.MongoDB" Version="9.0.4"/>
+        
+        <!-- Tooling / analyzers / tests -->
+        <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0"/>
+        <PackageVersion Include="coverlet.collector" Version="6.0.4"/>
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.0"/>
+        <PackageVersion Include="UAParser.Core" Version="4.0.5"/>
+        <PackageVersion Include="xunit" Version="2.9.3"/>
+        <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.0"/>
+
+        <!-- Scaffolding tools / OpenAPI / Swagger -->
+        <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8"/>
+        <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.2"/>
+    
+    </ItemGroup>
+    
 </Project>

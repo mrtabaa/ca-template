@@ -6,7 +6,7 @@ using Ca.Infrastructure.Modules.Message.Postgres;
 using Ca.Infrastructure.Modules.User.Postgres;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Ca.Infrastructure.Persistence.Postgres;
+namespace Ca.Infrastructure.Persistence.EFCore.Postgres.Extensions;
 
 public static class RepositoryExtensionsPostgres
 {

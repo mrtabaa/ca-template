@@ -5,7 +5,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 #region Add services to the container.
 
-builder.Services.AddWebApiServices(builder.Configuration);
+builder.Services.AddWebApiServices(builder.Configuration, builder.Environment);
 
 #endregion
 

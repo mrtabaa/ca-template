@@ -7,11 +7,15 @@
     </ItemGroup>
 
     <ItemGroup>
+        <!-- Config & DI utilities -->
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
+        <PackageReference Include="Microsoft.Extensions.FileProviders.Physical"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting"/>
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
 
-        <!--        DB and Identity-->
+        <!-- EF Core + Postgres -->
         <PackageReference Include="Microsoft.EntityFrameworkCore"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
             <PrivateAssets>all</PrivateAssets>
@@ -26,7 +30,6 @@
 
     <ItemGroup>
         <Folder Include="Modules\Auth\Mongo\Services\"/>
-        <Folder Include="Persistence\Postgres\Extensions\"/>
     </ItemGroup>
-
+    
 </Project>

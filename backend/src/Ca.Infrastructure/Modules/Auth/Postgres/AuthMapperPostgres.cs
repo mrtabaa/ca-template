@@ -1,6 +1,5 @@
 namespace Ca.Infrastructure.Modules.Auth.Postgres;
 
-public static class AuthMapperPostgres
+internal static class AuthMapperPostgres
 {
-    
 }
