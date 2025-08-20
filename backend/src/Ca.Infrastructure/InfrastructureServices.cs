@@ -1,11 +1,16 @@
+using Ca.Infrastructure.Persistence.EFCore.Postgres.Extensions;
 using Ca.Infrastructure.Persistence.Mongo.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Ca.Infrastructure;
 
 public static class InfrastructureServices
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructureServices(
+        this IServiceCollection services, IConfiguration config, IHostEnvironment env
+    )
     {
         // MongoDB
         services.AddConfigsServiceMongo(config);
