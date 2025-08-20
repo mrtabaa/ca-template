@@ -13,7 +13,7 @@ public sealed class Password
     public static Password Create(string? passwordRaw)
     {
         string? validationError = passwordRaw.ValidateValue(
-            nameof(passwordRaw), SharedLengths.PasswordMin, SharedLengths.PasswordMax, pattern: null
+            nameof(passwordRaw), SharedLengths.PasswordMin, SharedLengths.PasswordMax, regex: null
         );
 
         if (validationError is not null)

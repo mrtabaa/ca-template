@@ -9,7 +9,7 @@ internal static class ValidationExtensions
         string variableName,
         int minLength = 0,
         int maxLength = 0,
-        string? pattern = null
+        Regex? regex = null
     )
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -21,8 +21,8 @@ internal static class ValidationExtensions
         if (maxLength > 0 && value.Length > maxLength)
             return $"{variableName} must be at most {maxLength} characters.";
 
-        if (pattern is not null && Regex.IsMatch(value, pattern))
-            return $"{variableName} format is invalid.";
+        if (!(regex is null || regex.IsMatch(value)))
+            return $"Invalid format for {variableName} with value of '{value}'.";
 
         return null;
     }
