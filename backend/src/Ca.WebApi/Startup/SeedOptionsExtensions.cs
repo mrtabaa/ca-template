@@ -1,10 +1,10 @@
-using Ca.Shared.Configurations.Common.SeedSettings;
+using Ca.Domain.Modules.Startup.Entities;
 
-namespace Ca.WebApi.Extensions;
+namespace Ca.WebApi.Startup;
 
-internal static class ApplicationServiceExtensions
+internal static class SeedOptionsExtensions
 {
-    internal static IServiceCollection AddAppAdminSeederConfigsService(
+    internal static IServiceCollection AddSuperAdminSeedOptions(
         this IServiceCollection services, IConfiguration config
     )
     {

@@ -1,5 +1,5 @@
 using Ca.WebApi;
-using Ca.WebApi.Extensions;
+using Ca.WebApi.Startup;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +23,7 @@ if (app.Environment.IsDevelopment())
     );
 }
 
-await app.UseAppSeeder();
+await app.PerformAppSeeder();
 
 app.UseHttpsRedirection();
 

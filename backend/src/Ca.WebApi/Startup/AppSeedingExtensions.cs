@@ -5,16 +5,16 @@ using Ca.Application.Modules.Auth.Interfaces;
 using Ca.Contracts.Responses.AccessControl;
 using Ca.Contracts.Responses.Auth;
 using Ca.Domain.Modules.AccessControl.Enums;
-using Ca.Shared.Configurations.Common.SeedSettings;
+using Ca.Domain.Modules.Startup.Entities;
 using Ca.Shared.Results;
 using Ca.WebApi.Modules.Auth;
 using Microsoft.Extensions.Options;
 
 namespace Ca.WebApi.Startup;
 
-internal static class SeedWebApplicationExtensions
+internal static class AppSeedingExtensions
 {
-    internal static async Task UseAppSeeder(this WebApplication app)
+    internal static async Task PerformAppSeeder(this WebApplication app)
     {
         using IServiceScope scope = app.Services.CreateScope();
         SuperAdminSeedInfo superAdminSeedInfo = app.Services.GetRequiredService<IOptions<SuperAdminSeedInfo>>().Value;

@@ -1,4 +1,4 @@
-namespace Ca.Shared.Configurations.Common.SeedSettings;
+namespace Ca.Domain.Modules.Startup.Entities;
 
 public class SuperAdminSeedInfo
 {

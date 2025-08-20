@@ -1,6 +1,6 @@
 using Ca.Application.Modules.Auth.Commands;
 using Ca.Contracts.Requests.Auth;
-using Ca.Shared.Configurations.Common.SeedSettings;
+using Ca.Domain.Modules.Startup.Entities;
 
 namespace Ca.WebApi.Modules.Auth;
 
