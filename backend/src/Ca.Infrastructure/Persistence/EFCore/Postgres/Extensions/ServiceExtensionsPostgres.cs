@@ -1,3 +1,4 @@
+using Ca.Infrastructure.Persistence.EFCore.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -66,6 +67,9 @@ internal static class ServiceExtensionsPostgres
         this IServiceCollection services, IHostEnvironment env
     )
     {
+        // Register CustomModelBuilder
+        services.AddScoped<ICustomModelBuilder, CustomModelBuilderPostgres>();
+
         // AddDbContextPool has more performance than AddDbContext
         services.AddDbContextPool<AppDbContextPostgres>((provider, options) =>
             {

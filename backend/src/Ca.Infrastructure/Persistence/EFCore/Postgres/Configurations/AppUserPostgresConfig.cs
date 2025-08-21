@@ -13,6 +13,5 @@ internal sealed class AppUserPostgresConfig : IEntityTypeConfiguration<AppUserPo
     /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<AppUserPostgres> builder)
     {
-        builder.UsePreventConcurrency();
     }
 }

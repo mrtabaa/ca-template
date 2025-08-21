@@ -1,3 +1,4 @@
+using Ca.Infrastructure.Persistence.EFCore.Postgres.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -85,7 +86,7 @@ public sealed class AppDbContextPostgresFactory : IDesignTimeDbContextFactory<Ap
                     }
                 ).Options;
 
-            return new AppDbContextPostgres(opts);
+            return new AppDbContextPostgres(new CustomModelBuilderPostgres(), opts);
         }
     }
 }
