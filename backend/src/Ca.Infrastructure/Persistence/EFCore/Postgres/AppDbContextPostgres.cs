@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ca.Infrastructure.Persistence.EFCore.Postgres;
 
 // General settings for Postgres using EFCore
-public class AppDbContextPostgres(ICustomModelBuilder customBuilder,
+public class AppDbContextPostgres(IModelConventionPack conventionPack,
     DbContextOptions<AppDbContextPostgres> options) : DbContext(options)
 {
     // Postgres-compatible aggregates
@@ -20,8 +20,10 @@ public class AppDbContextPostgres(ICustomModelBuilder customBuilder,
         // Customized configuration classes
         builder.ApplyConfigurationsFromAssembly(typeof(AppDbContextPostgres).Assembly);
         
-        customBuilder.UsePreventConcurrency(builder.Entity<AppUserPostgres>());
+        // Applied our custom conventions
+        conventionPack.UseOptimisticConcurrencyWithXmin(builder.Entity<AppUserPostgres>());
         
+        // Apply some possible inherited conventions, otherwise EF skips all the extra mappings 
         base.OnModelCreating(builder);
     }
 }

@@ -9,6 +9,9 @@ ssl/
 #wwwroot
 storage/
 
+#Database
+Migrations/
+
 #Temp files
 format.cs
 format.html

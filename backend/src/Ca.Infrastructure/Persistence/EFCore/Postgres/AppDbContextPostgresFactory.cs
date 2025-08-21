@@ -86,7 +86,7 @@ public sealed class AppDbContextPostgresFactory : IDesignTimeDbContextFactory<Ap
                     }
                 ).Options;
 
-            return new AppDbContextPostgres(new CustomModelBuilderPostgres(), opts);
+            return new AppDbContextPostgres(new ModelConventionPackPostgres(), opts);
         }
     }
 }

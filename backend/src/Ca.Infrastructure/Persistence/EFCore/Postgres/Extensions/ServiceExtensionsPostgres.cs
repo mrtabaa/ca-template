@@ -68,7 +68,7 @@ internal static class ServiceExtensionsPostgres
     )
     {
         // Register CustomModelBuilder
-        services.AddScoped<ICustomModelBuilder, CustomModelBuilderPostgres>();
+        services.AddScoped<IModelConventionPack, ModelConventionPackPostgres>();
 
         // AddDbContextPool has more performance than AddDbContext
         services.AddDbContextPool<AppDbContextPostgres>((provider, options) =>
